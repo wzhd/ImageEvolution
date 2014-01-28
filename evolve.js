@@ -691,8 +691,6 @@ function EvolveCtrl($scope) {
     ACTUAL_SHAPES = MAX_SHAPES;
     ACTUAL_POINTS = MAX_POINTS;
 
-    alert("Importing "+MAX_SHAPES+" polygons ["+MAX_POINTS+"-vertex] ["+data.length+" numbers]...");
-
     init_dna(dna);
 
     var shape_size = 4+2*MAX_POINTS;

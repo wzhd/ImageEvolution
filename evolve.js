@@ -790,4 +790,17 @@ function EvolveCtrl($scope) {
   };
 
   $scope.init();
+
+  var defaultDropText = "Drop any image here...";
+  $scope.dropText = defaultDropText;
+
+  var dragOver = function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    var valid = e.dataTransfer && e.dataTransfer.types
+          && (e.dataTransfer.types.indexOf('Files') >= 0);
+    $scope.$apply(function() {
+      $scope.dropText = valid ? "Drop image here" : "Can only drop images";
+      $scope.dropClass = valid ? "dragging" : "invalid-dragging";
+    });
 };

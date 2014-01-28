@@ -35,9 +35,10 @@
     <script src="evolve.js"></script>
   </head>
   <body ng-controller="EvolveCtrl">
-    <div class="image">
+    <div class="image" ng-class="dropClass">
       Original<br/>
       <canvas id="canvas_input"></canvas>
+      <br/>{{dropText}}
     </div>
 
     <div class="image">

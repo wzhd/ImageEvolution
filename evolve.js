@@ -709,37 +709,26 @@ function EvolveCtrl($scope) {
     }
   }
 
-  function export_dna() {
-    var el = document.getElementById("clipboard");
-    if(el)
-      el.value = serializeDNA(DNA_BEST);
-    else
-      alert("Cannot find clipboard");
-  }
+  $scope.export_dna = function () {
+    $scope.exportingText = serializeDNA(DNA_BEST);
+  };
 
-  function export_dna_as_svg() {
-    var el = document.getElementById("clipboard");
-    if(el)
-      el.value = serializeDNAasSVG(DNA_BEST);
-    else
-      alert("Cannot find clipboard");
-  }
+  $scope.export_dna_as_svg = function () {
+      $scope.exportingText = serializeDNAasSVG(DNA_BEST);
+  };
 
-  function import_dna() {
-    var el = document.getElementById("clipboard");
-    if(el) {
-      deserializeDNA(DNA_BEST, el.value);
+  $scope.import_dna = function () {
+    deserializeDNA(DNA_BEST, $scope.exportingText);
 
-      init_dna(DNA_TEST);
-      copyDNA(DNA_BEST, DNA_TEST);
+    init_dna(DNA_TEST);
+    copyDNA(DNA_BEST, DNA_TEST);
 
-      redrawDNA();
-      refreshStats();
+    redrawDNA();
+    refreshStats();
 
-      setElement("polygons", ACTUAL_SHAPES);
-      setElement("vertices", ACTUAL_POINTS);
-    }
-  }
+    setElement("polygons", ACTUAL_SHAPES);
+    setElement("vertices", ACTUAL_POINTS);
+  };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   $scope.set_image = function () {

@@ -73,9 +73,8 @@
         <div class="button" id="b_export_dna" ng-click="export_dna()">Export DNA</div>
         <div class="button" id="b_export_svg" ng-click="export_dna_as_svg()">Export SVG</div>
         <div class="button" id="b_import_dna" ng-click="import_dna()">Import DNA</div>
-        <a href="#export_note">[help]</a>
         <br/>
-        <textarea name="clipboard" id="clipboard" ng-click="select_all();"></textarea>
+        <textarea name="clipboard" id="clipboard" ng-click="select_all();">{{exportingText}}</textarea>
       </form>
     </div>
 

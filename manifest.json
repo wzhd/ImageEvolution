@@ -1,7 +1,7 @@
 {
   "name":"Image Evolution",
   "description":"Find an approximation of an image using a simulated annealing like optimization algorithm",
-  "version":"0.0.1",
+  "version":"0.0.2",
   "app":{
     "background": {
       "scripts": ["background.js"]

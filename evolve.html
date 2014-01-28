@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app ng-csp>
 
   <!--
       The MIT License
@@ -31,89 +31,76 @@
   <head>
     <title>Image evolution</title>
     <link rel="stylesheet" href="evolve.css">
+    <script src="angular.min.js"></script>
     <script src="evolve.js"></script>
+  </head>
+  <body ng-controller="EvolveCtrl">
+    <div class="image">
+      Original<br/>
+      <canvas id="canvas_input"></canvas>
+    </div>
 
-    <body onload="init()">
-      <div class="image">
-        Original<br/>
-        <canvas id="canvas_input"></canvas>
+    <div class="image">
+      Best<br/>
+      <canvas id="canvas_best"></canvas>
+    </div>
+
+    <div class="image">
+      Evolving<br/>
+      <canvas id="canvas_test"></canvas>
+    </div>
+
+    <div id="fitwrap">
+      <span id="fitness">?</span> Fitness<br/>
+      <span id="step_benefit">0</span> Improvements<br/>
+      <span id="step_total">0</span> Mutations<br/>
+
+      <div id="start" ng-click="start()">Start</div>
+      <div id="stop" ng-click="stop()">Stop</div>
+
+      <div id="stats">
+        <span id="time">0</span> Elapsed time<br/>
+        <span id="mutsec">?</span> Mutations per second<br/>
+      </div>
+    </div>
+
+    <br class="clr"/>
+
+    <br class="clr"/>
+
+    <div id="dnaformwrap">
+      <form name="dnaform">
+        <div class="button" id="b_export_dna" ng-click="export_dna()">Export DNA</div>
+        <div class="button" id="b_export_svg" ng-click="export_dna_as_svg()">Export SVG</div>
+        <div class="button" id="b_import_dna" ng-click="import_dna()">Import DNA</div>
+        <a href="#export_note">[help]</a>
+        <br/>
+        <textarea name="clipboard" id="clipboard" ng-click="select_all();"></textarea>
+      </form>
+    </div>
+
+
+    <div id="parameters">
+      <div id="mutationtype">
+        <div class="parname">Mutation</div>
+        <div class="button" id="b_mut_gauss" ng-click="setMutation('gauss')">Gaussian</div>
+        <div class="button" id="b_mut_soft" ng-click="setMutation('soft')">Soft</div>
+        <div class="button" id="b_mut_med" ng-click="setMutation('medium')">Medium</div>
+        <div class="button" id="b_mut_hard" ng-click="setMutation('hard')">Hard</div>
       </div>
 
-      <div class="image">
-        Best<br/>
-        <canvas id="canvas_best"></canvas>
+      <div id="resetdna">
+        <div class="parname">Initialize DNA</div>
+        <div class="button" id="b_dna_random" ng-click="setDnaRandom()">Color</div>
+        <div class="button" id="b_dna_white" ng-click="setDnaColor(254,254,254)">White</div>
+        <div class="button" id="b_dna_black" ng-click="setDnaColor(0,0,0)">Black</div>
       </div>
 
-      <div class="image">
-        Evolving<br/>
-        <canvas id="canvas_test"></canvas>
+      <div id="geometry">
+        <div class="button" ng-click="removePolygon()">-</div> <div class="button" ng-click="addPolygon()">+</div> <span class="parname pargeo"><span id="polygons">50</span> Polygons</span> <br/>
+        <div class="button" ng-click="removeVertex()">-</div> <div class="button" ng-click="addVertex()">+</div> <span class="parname pargeo"><span id="vertices">6</span> Vertices</span>
       </div>
+    </div>
 
-      <div id="fitwrap">
-        <span id="fitness">?</span> Fitness<br/>
-        <span id="step_benefit">0</span> Improvements<br/>
-        <span id="step_total">0</span> Mutations<br/>
-
-        <div id="start" onclick="start()">Start</div>
-        <div id="stop" onclick="stop()">Stop</div>
-
-        <div id="stats">
-          <span id="time">0</span> Elapsed time<br/>
-          <span id="mutsec">?</span> Mutations per second<br/>
-        </div>
-      </div>
-
-      <br class="clr"/>
-
-      <div id="imgform">
-        <form>
-          <div class="button" id="b_setimage" onclick="set_image()">Set new image URL</div>
-          <input id="imgurl"></input>
-        </form>
-        <small style="color:#555;">Image should be small (~200x200 pixels), otherwise fitness computation is very slow.
-          <p>Examples:
-            <a onclick="set_example_image(this); return false;" href="http://alteredqualia.com/visualization/evolve/mona_lisa_crop.jpg">Mona Lisa</a>
-            <a onclick="set_example_image(this); return false;" href="http://alteredqualia.com/visualization/evolve/darwin_crop.jpg">Darwin</a>
-            <a onclick="set_example_image(this); return false;" href="http://alteredqualia.com/visualization/evolve/velociraptor2_crop.jpg">Velociraptor</a>
-            <a onclick="set_example_image(this); return false;" href="http://alteredqualia.com/visualization/evolve/koza_crop.jpg">John Koza</a>
-        </small>
-      </div>
-
-      <br class="clr"/>
-
-      <div id="dnaformwrap">
-        <form name="dnaform">
-          <div class="button" id="b_export_dna" onclick="export_dna()">Export DNA</div>
-          <div class="button" id="b_export_svg" onclick="export_dna_as_svg()">Export SVG</div>
-          <div class="button" id="b_import_dna" onclick="import_dna()">Import DNA</div>
-          <a href="#export_note">[help]</a>
-          <br/>
-          <textarea name="clipboard" id="clipboard" onClick="select_all();"></textarea>
-        </form>
-      </div>
-
-
-      <div id="parameters">
-        <div id="mutationtype">
-          <div class="parname">Mutation</div>
-          <div class="button" id="b_mut_gauss" onclick="setMutation('gauss')">Gaussian</div>
-          <div class="button" id="b_mut_soft" onclick="setMutation('soft')">Soft</div>
-          <div class="button" id="b_mut_med" onclick="setMutation('medium')">Medium</div>
-          <div class="button" id="b_mut_hard" onclick="setMutation('hard')">Hard</div>
-        </div>
-
-        <div id="resetdna">
-          <div class="parname">Initialize DNA</div>
-          <div class="button" id="b_dna_random" onclick="setDnaRandom()">Color</div>
-          <div class="button" id="b_dna_white" onclick="setDnaColor(254,254,254)">White</div>
-          <div class="button" id="b_dna_black" onclick="setDnaColor(0,0,0)">Black</div>
-        </div>
-
-        <div id="geometry">
-          <div class="button" onclick="removePolygon()">-</div> <div class="button" onclick="addPolygon()">+</div> <span class="parname pargeo"><span id="polygons">50</span> Polygons</span> <br/>
-          <div class="button" onclick="removeVertex()">-</div> <div class="button" onclick="addVertex()">+</div> <span class="parname pargeo"><span id="vertices">6</span> Vertices</span>
-        </div>
-      </div>
-
-    </body>
+  </body>
 </html>

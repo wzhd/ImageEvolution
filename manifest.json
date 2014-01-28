@@ -1,0 +1,15 @@
+{
+  "name":"Image Evolution",
+  "description":"Find an approximation of an image using a simulated annealing like optimization algorithm",
+  "version":"0.0.1",
+  "app":{
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "icons":{
+    "16":"mona_lisa_16.png",
+    "128":"mona_lisa_128.png"
+  },
+  "permissions": ["storage"]
+}

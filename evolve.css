@@ -52,6 +52,14 @@ dd { margin:0 0 2em 0 }
 
 .speed { font-size:0.9em; color:#60BF5F }
 
+
+@-webkit-keyframes switch-green {
+  from { background-color: white;} to {background-color: rgb(163, 255, 163);}
+}
+@-webkit-keyframes switch-red {
+  from { background-color: white;} to {background-color: rgb(255, 203, 203);}
+}
+
 .dragging {
   -webkit-animation: switch-green 0.5s ease-in-out 0 infinite alternate;
 }

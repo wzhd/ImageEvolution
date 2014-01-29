@@ -60,6 +60,8 @@ function EvolveCtrl($scope) {
   var DATA_INPUT = 0;
   var DATA_TEST = 0;
 
+  var CHOSEN_FILE_ENTRY = null;
+
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   function hide(id) {
     var el = document.getElementById(id);
@@ -729,36 +731,22 @@ function EvolveCtrl($scope) {
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  $scope.set_image = function () {
-    var el = document.getElementById("imgurl");
-    if(el) {
-      IMAGE.onload = function() {
-        // hack around onload bug
-        if(IMAGE.complete) {
-          init_canvas();
-        }
-        else {
-          setTimeout(init_canvas, 100);
-        }
-      };
-      IMAGE.src = "http://alteredqualia.com/visualization/evolve/proxy.php?i="+el.value;
-    }
+  $scope.set_image = function (imageFile) {
+    init_canvas();
+    IMAGE.src = imageFile;
+    console.log(IMAGE.src);
   };
 
-  $scope.set_example_image = function (lnk) {
-    if(lnk) {
-      var el = document.getElementById("imgurl");
-      el.value = lnk.href;
-      IMAGE.src = lnk.href;
-      IMAGE.onload = function() {
-        // hack around onload bug
-        if(IMAGE.complete) {
-          init_canvas();
-        }
-        else {
-          setTimeout(init_canvas, 100);
-        }
-      };
+  function loadFileEntry() {
+    if (!CHOSEN_FILE_ENTRY) {
+      $scope.dropText = 'Sorry, could not load file';
+    }
+    else {
+      CHOSEN_FILE_ENTRY.file(function(file) {
+        $scope.set_image(window.URL.createObjectURL(file));
+      });
+
+      $scope.dropText = 'Image file loaded';
     }
   };
 
@@ -789,9 +777,7 @@ function EvolveCtrl($scope) {
     setButtonHighlight("b_mut_med", ["b_mut_gauss", "b_mut_soft", "b_mut_med", "b_mut_hard"]);
   };
 
-  $scope.init();
-
-  var defaultDropText = "Drop any image here...";
+  var defaultDropText = "Drag any image here...";
   $scope.dropText = defaultDropText;
 
   var dragOver = function(e) {
@@ -800,7 +786,45 @@ function EvolveCtrl($scope) {
     var valid = e.dataTransfer && e.dataTransfer.types
           && (e.dataTransfer.types.indexOf('Files') >= 0);
     $scope.$apply(function() {
-      $scope.dropText = valid ? "Drop image here" : "Can only drop images";
+      $scope.dropText = valid ? "Drop it here" : "Only images are supported";
       $scope.dropClass = valid ? "dragging" : "invalid-dragging";
     });
+  };
+
+  var dragLeave = function(e) {
+    $scope.$apply(function() {
+      $scope.dropText = defaultDropText;
+      $scope.dropClass = '';
+    });
+  };
+
+  var drop = function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var data = e.dataTransfer;
+
+    for (var i = 0; i < data.items.length; i++) {
+      var item = data.items[i];
+      if (item.kind == 'file' &&
+          item.type.match('image/*') &&
+          item.webkitGetAsEntry()) {
+        CHOSEN_FILE_ENTRY = item.webkitGetAsEntry();
+        break;
+      }
+    }
+
+    loadFileEntry(CHOSEN_FILE_ENTRY);
+
+    $scope.$apply(function() {
+      $scope.dropText = defaultDropText;
+      $scope.dropClass =  '';
+    });
+  };
+
+  document.body.addEventListener("dragover", dragOver, false);
+  document.body.addEventListener("dragleave", dragLeave, false);
+  document.body.addEventListener("drop", drop, false);
+
+  $scope.init();
 };

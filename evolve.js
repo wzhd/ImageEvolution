@@ -189,27 +189,23 @@ function EvolveCtrl($scope) {
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   $scope.setDnaRandom =  function () {
-    if(confirm("WARNING! This will reset all your progress so far. Do you really want to reset DNA?")) {
-      INIT_TYPE = "random";
-      resetDna();
-      refreshStats();
-      setButtonHighlight("b_dna_random", ["b_dna_random", "b_dna_white", "b_dna_black"]);
-    }
+    INIT_TYPE = "random";
+    resetDna();
+    refreshStats();
+    setButtonHighlight("b_dna_random", ["b_dna_random", "b_dna_white", "b_dna_black"]);
   };
 
   $scope.setDnaColor = function (r,g,b) {
-    if(confirm("WARNING! This will reset all your progress so far. Do you really want to reset DNA?")) {
-      INIT_TYPE = "color";
-      INIT_R = r;
-      INIT_G = g;
-      INIT_B = b;
-      resetDna();
-      refreshStats();
-      if(r==0&&g==0&&b==0)
-        setButtonHighlight("b_dna_black", ["b_dna_random", "b_dna_white", "b_dna_black"]);
-      else
-        setButtonHighlight("b_dna_white", ["b_dna_random", "b_dna_white", "b_dna_black"]);
-    }
+    INIT_TYPE = "color";
+    INIT_R = r;
+    INIT_G = g;
+    INIT_B = b;
+    resetDna();
+    refreshStats();
+    if(r==0&&g==0&&b==0)
+      setButtonHighlight("b_dna_black", ["b_dna_random", "b_dna_white", "b_dna_black"]);
+    else
+      setButtonHighlight("b_dna_white", ["b_dna_random", "b_dna_white", "b_dna_black"]);
   };
 
   function resetDna() {

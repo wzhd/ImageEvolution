@@ -1,6 +1,7 @@
 aaa { outline:dotted 1px red }
 body { font-family:arial, sans-serif; padding:1em }
 h2 { margin-top:1.75em }
+p { font-size: 0.5em }
 canvas { border:solid 1px #000 }
 .image { float:left; margin:0 0.5em 0 0; font-size:2em }
 .clr { clear:both }

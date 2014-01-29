@@ -11,5 +11,8 @@
     "16":"mona_lisa_16.png",
     "128":"mona_lisa_128.png"
   },
-  "permissions": ["storage"]
+  "permissions": [
+    {"fileSystem": ["retainEntries"]},
+    "storage"
+  ]
 }

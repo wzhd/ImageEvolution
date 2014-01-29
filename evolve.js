@@ -734,7 +734,6 @@ function EvolveCtrl($scope) {
   $scope.set_image = function (imageFile) {
     init_canvas();
     IMAGE.src = imageFile;
-    console.log(IMAGE.src);
   };
 
   function loadFileEntry() {
@@ -777,7 +776,25 @@ function EvolveCtrl($scope) {
     setButtonHighlight("b_mut_med", ["b_mut_gauss", "b_mut_soft", "b_mut_med", "b_mut_hard"]);
   };
 
-  var defaultDropText = "Drag any image here...";
+  $scope.chooseFile = function() {
+    var accepts = [{
+      mimeTypes: ['image/*'],
+      extensions: ['jpeg', 'png']
+    }];
+    chrome.fileSystem.chooseEntry({type: 'openFile', accepts: accepts}, function(readOnlyEntry) {
+      if (!readOnlyEntry) {
+        return;
+      }
+      try { // TODO remove try once retain is in stable.
+        chrome.storage.local.set(
+          {'chosenFile': chrome.fileSystem.retainEntry(readOnlyEntry)});
+      } catch (e) {}
+      CHOSEN_FILE_ENTRY = readOnlyEntry;
+      loadFileEntry();
+    });
+  };
+
+  var defaultDropText = "Or drag any image here";
   $scope.dropText = defaultDropText;
 
   var dragOver = function(e) {

@@ -1,0 +1,98 @@
+{
+  "appName": {
+    "message": "Image Evolution"
+  },
+  "appDesc": {
+    "message": "Find an approximation of an image using a simulated annealing like optimization algorithm"
+  },
+  "original": {
+    "message": "Original"
+  },
+  "best": {
+    "message": "Best"
+  },
+  "evolving": {
+    "message": "Evolving"
+  },
+  "chooseFile": {
+    "message": "Choose image file"
+  },
+  "loadFileFailure": {
+    "message": "Sorry, could not load file"
+  },
+  "loadFileSuccess": {
+    "message": "Image file loaded"
+  },
+  "dragImagePrompt": {
+    "message": "Or drag any image here"
+  },
+  "dragImageValid": {
+    "message": "Drop it here"
+  },
+  "dragImageInvalid": {
+    "message": "Only images are supported"
+  },
+  "fitness": {
+    "message": "Fitness"
+  },
+  "improvements": {
+    "message": "Improvements"
+  },
+  "mutations": {
+    "message": "Mutations"
+  },
+  "start": {
+    "message": "Start"
+  },
+  "stop": {
+    "message": "Stop"
+  },
+  "elapsedTime": {
+    "message": "Elapsed Time"
+  },
+  "mutationsPerSecond": {
+    "message": "Mutations per second"
+  },
+  "exportDna": {
+    "message": "Export DNA"
+  },
+  "exportSvg": {
+    "message": "Export SVG"
+  },
+  "importDna": {
+    "message": "Import DNA"
+  },
+  "mutation": {
+    "message": "Mutation"
+  },
+  "gaussian": {
+    "message": "Gaussian"
+  },
+  "soft": {
+    "message": "Soft"
+  },
+  "medium": {
+    "message": "Medium"
+  },
+  "hard": {
+    "message": "Hard"
+  },
+  "initializeDna": {
+    "message": "Initialize DNA"
+  },
+  "colour": {
+    "message": "Colour"
+  },
+  "white": {
+    "message": "White"
+  },
+  "black": {
+    "message": "Black"
+  },
+  "polygons": {
+    "message": "Polygons"
+  },
+  "vertices": {
+    "message": "Vertices"
+  }
+}

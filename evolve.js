@@ -63,6 +63,33 @@ function EvolveCtrl($scope) {
   var CHOSEN_FILE_ENTRY = null;
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  $scope.originalText = chrome.i18n.getMessage("original");
+  $scope.bestText = chrome.i18n.getMessage("best");
+  $scope.evolvingText = chrome.i18n.getMessage("evolving");
+  $scope.chooseFileText = chrome.i18n.getMessage("chooseFile");
+  $scope.fitnessText = chrome.i18n.getMessage("fitness");
+  $scope.improvementsText = chrome.i18n.getMessage("improvements");
+  $scope.mutationsText = chrome.i18n.getMessage('mutations');
+  $scope.startText = chrome.i18n.getMessage('start');
+  $scope.stopText = chrome.i18n.getMessage('stop');
+  $scope.elapsedTimeText = chrome.i18n.getMessage('elapsedTime');
+  $scope.mutationsPerSecondText = chrome.i18n.getMessage('mutationsPerSecond');
+  $scope.exportDnaText = chrome.i18n.getMessage('exportDna');
+  $scope.exportSvgText = chrome.i18n.getMessage('exportSvg');
+  $scope.importDnaText = chrome.i18n.getMessage('importDna');
+  $scope.mutationText = chrome.i18n.getMessage('mutation');
+  $scope.gaussianText = chrome.i18n.getMessage('gaussian');
+  $scope.softText = chrome.i18n.getMessage('soft');
+  $scope.mediumText = chrome.i18n.getMessage('medium');
+  $scope.hardText = chrome.i18n.getMessage('hard');
+  $scope.initializeDnaText = chrome.i18n.getMessage('initializeDna');
+  $scope.colourText = chrome.i18n.getMessage('colour');
+  $scope.whiteText = chrome.i18n.getMessage('white');
+  $scope.blackText = chrome.i18n.getMessage('black');
+  $scope.polygonsText = chrome.i18n.getMessage('polygons');
+  $scope.verticesText = chrome.i18n.getMessage('vertices');
+
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   function hide(id) {
     var el = document.getElementById(id);
     if(el)
@@ -734,14 +761,14 @@ function EvolveCtrl($scope) {
 
   function loadFileEntry() {
     if (!CHOSEN_FILE_ENTRY) {
-      $scope.dropText = 'Sorry, could not load file';
+      $scope.dropText = chrome.i18n.getMessage('loadFileFailure');
     }
     else {
       CHOSEN_FILE_ENTRY.file(function(file) {
         $scope.set_image(window.URL.createObjectURL(file));
       });
 
-      $scope.dropText = 'Image file loaded';
+      $scope.dropText = chrome.i18n.getMessage('loadFileSuccess');
     }
   };
 
@@ -790,8 +817,7 @@ function EvolveCtrl($scope) {
     });
   };
 
-  var defaultDropText = "Or drag any image here";
-  $scope.dropText = defaultDropText;
+  $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
 
   var dragOver = function(e) {
     e.stopPropagation();
@@ -799,14 +825,16 @@ function EvolveCtrl($scope) {
     var valid = e.dataTransfer && e.dataTransfer.types
           && (e.dataTransfer.types.indexOf('Files') >= 0);
     $scope.$apply(function() {
-      $scope.dropText = valid ? "Drop it here" : "Only images are supported";
+      $scope.dropText = valid ?
+        chrome.i18n.getMessage('dragImageValid')
+        : chrome.i18n.getMessage('dragImageInvalid');
       $scope.dropClass = valid ? "dragging" : "invalid-dragging";
     });
   };
 
   var dragLeave = function(e) {
     $scope.$apply(function() {
-      $scope.dropText = defaultDropText;
+      $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
       $scope.dropClass = '';
     });
   };
@@ -830,7 +858,7 @@ function EvolveCtrl($scope) {
     loadFileEntry(CHOSEN_FILE_ENTRY);
 
     $scope.$apply(function() {
-      $scope.dropText = defaultDropText;
+      $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
       $scope.dropClass =  '';
     });
   };

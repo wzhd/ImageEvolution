@@ -29,40 +29,40 @@
 
     -->
   <head>
-    <title>Image evolution</title>
+    <title>Image Evolution</title>
     <link rel="stylesheet" href="evolve.css">
     <script src="angular.min.js"></script>
     <script src="evolve.js"></script>
   </head>
   <body ng-controller="EvolveCtrl">
     <div class="image" ng-class="dropClass">
-      Original<br/>
+      {{originalText}}<br/>
       <canvas id="canvas_input"></canvas>
       <br/>
-      <button ng-click="chooseFile()">Choose image file</button> <p>{{dropText}}</p>
+      <button ng-click="chooseFile()">{{chooseFileText}}</button> <p>{{dropText}}</p>
     </div>
 
     <div class="image">
-      Best<br/>
+      {{bestText}}<br/>
       <canvas id="canvas_best"></canvas>
     </div>
 
     <div class="image">
-      Evolving<br/>
+      {{evolvingText}}<br/>
       <canvas id="canvas_test"></canvas>
     </div>
 
     <div id="fitwrap">
-      <span id="fitness">?</span> Fitness<br/>
-      <span id="step_benefit">0</span> Improvements<br/>
-      <span id="step_total">0</span> Mutations<br/>
+      <span id="fitness">?</span>{{fitnessText}}<br/>
+      <span id="step_benefit">0</span>{{improvementsText}}<br/>
+      <span id="step_total">0</span>{{mutationsText}}<br/>
 
-      <div id="start" ng-click="start()">Start</div>
-      <div id="stop" ng-click="stop()">Stop</div>
+      <div id="start" ng-click="start()">{{startText}}</div>
+      <div id="stop" ng-click="stop()">{{stopText}}</div>
 
       <div id="stats">
-        <span id="time">0</span> Elapsed time<br/>
-        <span id="mutsec">?</span> Mutations per second<br/>
+        <span id="time">0</span>{{elapsedTimeText}}<br/>
+        <span id="mutsec">?</span>{{mutationsPerSecondText}}<br/>
       </div>
     </div>
 
@@ -72,9 +72,9 @@
 
     <div id="dnaformwrap">
       <form name="dnaform">
-        <div class="button" id="b_export_dna" ng-click="export_dna()">Export DNA</div>
-        <div class="button" id="b_export_svg" ng-click="export_dna_as_svg()">Export SVG</div>
-        <div class="button" id="b_import_dna" ng-click="import_dna()">Import DNA</div>
+        <div class="button" id="b_export_dna" ng-click="export_dna()">{{exportDnaText}}</div>
+        <div class="button" id="b_export_svg" ng-click="export_dna_as_svg()">{{exportSvgText}}</div>
+        <div class="button" id="b_import_dna" ng-click="import_dna()">{{importDnaText}}</div>
         <br/>
         <textarea name="clipboard" id="clipboard" ng-click="select_all();">{{exportingText}}</textarea>
       </form>
@@ -83,23 +83,23 @@
 
     <div id="parameters">
       <div id="mutationtype">
-        <div class="parname">Mutation</div>
-        <div class="button" id="b_mut_gauss" ng-click="setMutation('gauss')">Gaussian</div>
-        <div class="button" id="b_mut_soft" ng-click="setMutation('soft')">Soft</div>
-        <div class="button" id="b_mut_med" ng-click="setMutation('medium')">Medium</div>
-        <div class="button" id="b_mut_hard" ng-click="setMutation('hard')">Hard</div>
+        <div class="parname">{{mutationText}}</div>
+        <div class="button" id="b_mut_gauss" ng-click="setMutation('gauss')">{{gaussianText}}</div>
+        <div class="button" id="b_mut_soft" ng-click="setMutation('soft')">{{softText}}</div>
+        <div class="button" id="b_mut_med" ng-click="setMutation('medium')">{{mediumText}}</div>
+        <div class="button" id="b_mut_hard" ng-click="setMutation('hard')">{{hardText}}</div>
       </div>
 
       <div id="resetdna">
-        <div class="parname">Initialize DNA</div>
-        <div class="button" id="b_dna_random" ng-click="setDnaRandom()">Color</div>
-        <div class="button" id="b_dna_white" ng-click="setDnaColor(254,254,254)">White</div>
-        <div class="button" id="b_dna_black" ng-click="setDnaColor(0,0,0)">Black</div>
+        <div class="parname">{{initializeDnaText}}</div>
+        <div class="button" id="b_dna_random" ng-click="setDnaRandom()">{{colourText}}</div>
+        <div class="button" id="b_dna_white" ng-click="setDnaColor(254,254,254)">{{whiteText}}</div>
+        <div class="button" id="b_dna_black" ng-click="setDnaColor(0,0,0)">{{blackText}}</div>
       </div>
 
       <div id="geometry">
-        <div class="button" ng-click="removePolygon()">-</div> <div class="button" ng-click="addPolygon()">+</div> <span class="parname pargeo"><span id="polygons">50</span> Polygons</span> <br/>
-        <div class="button" ng-click="removeVertex()">-</div> <div class="button" ng-click="addVertex()">+</div> <span class="parname pargeo"><span id="vertices">6</span> Vertices</span>
+        <div class="button" ng-click="removePolygon()">-</div> <div class="button" ng-click="addPolygon()">+</div> <span class="parname pargeo"><span id="polygons">50</span>{{polygonsText}}</span> <br/>
+        <div class="button" ng-click="removeVertex()">-</div> <div class="button" ng-click="addVertex()">+</div> <span class="parname pargeo"><span id="vertices">6</span>{{verticesText}}</span>
       </div>
     </div>
 

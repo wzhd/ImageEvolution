@@ -1,0 +1,95 @@
+{
+  "appDesc": {
+    "message": "使用模拟退火算法生成任意图片的多边形近似"
+  },
+  "original": {
+    "message": "模版"
+  },
+  "best": {
+    "message": "最佳"
+  },
+  "evolving": {
+    "message": "进化中"
+  },
+  "chooseFile": {
+    "message": "选择图片"
+  },
+  "loadFileFailure": {
+    "message": "抱歉,图片加载失败"
+  },
+  "loadFileSuccess": {
+    "message": "图片加载成功"
+  },
+  "dragImagePrompt": {
+    "message": "或拖放图片到此处"
+  },
+  "dragImageValid": {
+    "message": "放在这里"
+  },
+  "dragImageInvalid": {
+    "message": "只支持图片"
+  },
+  "fitness": {
+    "message": "符合"
+  },
+  "improvements": {
+    "message": "次改进"
+  },
+  "mutations": {
+    "message": "次变异"
+  },
+  "start": {
+    "message": "开始"
+  },
+  "stop": {
+    "message": "停止"
+  },
+  "elapsedTime": {
+    "message": "已用时间"
+  },
+  "mutationsPerSecond": {
+    "message": "次变异/秒"
+  },
+  "exportDna": {
+    "message": "导出DNA"
+  },
+  "exportSvg": {
+    "message": "导出SVG"
+  },
+  "importDna": {
+    "message": "导入DNA"
+  },
+  "mutation": {
+    "message": "选择变异程度"
+  },
+  "gaussian": {
+    "message": "高斯"
+  },
+  "soft": {
+    "message": "柔和"
+  },
+  "medium": {
+    "message": "适中"
+  },
+  "hard": {
+    "message": "剧烈"
+  },
+  "initializeDna": {
+    "message": "初始化DNA"
+  },
+  "colour": {
+    "message": "彩色"
+  },
+  "white": {
+    "message": "白色"
+  },
+  "black": {
+    "message": "黑色"
+  },
+  "polygons": {
+    "message": "个多边形"
+  },
+  "vertices": {
+    "message": "个节点"
+  }
+}

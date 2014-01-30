@@ -1,3 +1,6 @@
+<a target="_blank" href="https://chrome.google.com/webstore/detail/image-evolution/ikleegnjmjhbjpoghhlmmbhpchbgollc">![Try it now in CWS](https://raw.github.com/wzhd/ImageEvolution/master/tryitnowbutton.png "Click here to install this sample from the Chrome Web store")</a>
+
+# Cool App - Image Evolution
 The goal is to get an image represented as a collection of overlapping polygons of various colors and transparencies.
 We start from random 50 polygons that are invisible. In each optimization step we randomly modify one parameter (like color components or polygon vertices) and check whether such new variant looks more like the original image. If it is, we keep it, and continue to mutate this one instead.
 

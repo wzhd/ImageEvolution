@@ -1,6 +1,7 @@
 {
   "name":"__MSG_appName__",
   "description":"__MSG_appDesc__",
+  "offline_enabled": true,
   "version":"0.0.4",
   "default_locale": "en",
   "app":{

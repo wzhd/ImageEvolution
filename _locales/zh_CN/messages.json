@@ -1,4 +1,7 @@
 {
+  "appName": {
+    "message": "Image Evolution"
+  },
   "appDesc": {
     "message": "使用模拟退火算法生成任意图片的多边形近似"
   },

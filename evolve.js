@@ -2,7 +2,7 @@ function EvolveCtrl($scope) {
   var IMG_INIT ="mona_lisa_crop.jpg"; // mona_lisa_crop.jpg mondrian.jpg
   var DEPTH = 4;
 
-  var INIT_TYPE = "color"; // random color
+  var INIT_TYPE = "random"; // random color
   var INIT_R = 0;
   var INIT_G = 0;
   var INIT_B = 0;
@@ -794,7 +794,7 @@ function EvolveCtrl($scope) {
     };
     IMAGE.src = IMG_INIT;
 
-    setButtonHighlight("b_dna_black", ["b_dna_random", "b_dna_white", "b_dna_black"]);
+    setButtonHighlight("b_dna_random", ["b_dna_random", "b_dna_white", "b_dna_black"]);
     setButtonHighlight("b_mut_med", ["b_mut_gauss", "b_mut_soft", "b_mut_med", "b_mut_hard"]);
   };
 

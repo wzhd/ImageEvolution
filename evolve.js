@@ -622,8 +622,19 @@ function EvolveCtrl($scope) {
     CANVAS_BEST = document.getElementById('canvas_best');
     CONTEXT_BEST = CANVAS_BEST.getContext('2d');
 
-    IWIDTH = IMAGE.width;
-    IHEIGHT = IMAGE.height;
+    //shrink image if it's too large
+    var ratio = 1;
+    var imagePerimeter = (IMAGE.width + IMAGE.height) * 2;
+    if (imagePerimeter > 800)
+      ratio = 800 / imagePerimeter;
+    IWIDTH = Math.round(ratio * IMAGE.width);
+    IHEIGHT = Math.round(ratio * IMAGE.height);
+    var canvasCopy = document.createElement("canvas");
+    var copyContext = canvasCopy.getContext("2d");
+
+    canvasCopy.width = IMAGE.width;
+    canvasCopy.height = IMAGE.height;
+    copyContext.drawImage(IMAGE, 0, 0);
 
     SUBPIXELS = IWIDTH*IHEIGHT*DEPTH;
     NORM_COEF = IWIDTH*IHEIGHT*3*255;
@@ -638,7 +649,9 @@ function EvolveCtrl($scope) {
     CANVAS_BEST.setAttribute('height',IHEIGHT);
 
     // draw the image onto the canvas
-    CONTEXT_INPUT.drawImage(IMAGE, 0, 0, IWIDTH, IHEIGHT);
+    CONTEXT_INPUT.drawImage(canvasCopy,
+                            0, 0, canvasCopy.width, canvasCopy.height,
+                            0, 0, CANVAS_INPUT.width, CANVAS_INPUT.height);
 
     DATA_INPUT = CONTEXT_INPUT.getImageData(0, 0, IWIDTH, IHEIGHT).data;
 

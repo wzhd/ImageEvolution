@@ -296,8 +296,7 @@ function EvolveCtrl($scope) {
   }
 
   function drawDNA(ctx, dna) {
-    ctx.fillStyle = "rgb(255,255,255)";
-    ctx.fillRect(0, 0, IWIDTH, IHEIGHT);
+    ctx.clearRect(0, 0, IWIDTH, IHEIGHT);
     for(var i=0;i<ACTUAL_SHAPES;i++) {
       drawShape(ctx, dna[i].shape, dna[i].color);
     }

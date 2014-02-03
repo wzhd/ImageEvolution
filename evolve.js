@@ -76,6 +76,7 @@ function EvolveCtrl($scope) {
   $scope.mutationsPerSecondText = chrome.i18n.getMessage('mutationsPerSecond');
   $scope.exportDnaText = chrome.i18n.getMessage('exportDna');
   $scope.exportSvgText = chrome.i18n.getMessage('exportSvg');
+  $scope.savePngText = chrome.i18n.getMessage('savePng');
   $scope.importDnaText = chrome.i18n.getMessage('importDna');
   $scope.mutationText = chrome.i18n.getMessage('mutation');
   $scope.gaussianText = chrome.i18n.getMessage('gaussian');
@@ -764,6 +765,43 @@ function EvolveCtrl($scope) {
     chrome.fileSystem.chooseEntry(config, function(writableEntry) {
       writeFileEntry(writableEntry, blob, function(e) {});
     });
+  };
+
+  $scope.savePng = function() {
+    var blob = dataUriToBlob(CANVAS_BEST.toDataURL());
+    var name = 'image.png';
+    if (CHOSEN_FILE_ENTRY) {
+      name = CHOSEN_FILE_ENTRY.name;
+      name = name.substr(0, name.lastIndexOf('.'));
+      name = name + '.png';
+    }
+    var config = {type: 'saveFile', suggestedName: name};
+    chrome.fileSystem.chooseEntry(config, function(writableEntry) {
+      writeFileEntry(writableEntry, blob, function(e) {});
+    });
+  };
+
+  function dataUriToBlob(dataURI) {
+    // adapted from:
+    // http://stackoverflow.com/questions/6431281/save-png-canvas-image-to-html5-storage-javascript
+
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs
+    var byteString = atob(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    // write the ArrayBuffer to a blob, and you're done
+    var blob = new Blob([ab], { "type": mimeString });
+    return blob;
   };
 
   function writeFileEntry(writableEntry, blob, callback) {

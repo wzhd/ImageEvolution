@@ -59,6 +59,9 @@
   "exportSvg": {
     "message": "Export SVG"
   },
+  "savePng": {
+    "message": "Save PNG"
+  },
   "importDna": {
     "message": "Import DNA"
   },

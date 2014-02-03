@@ -754,7 +754,13 @@ function EvolveCtrl($scope) {
 
   $scope.save_dna_as_svg = function() {
     var blob = new Blob([serializeDNAasSVG(DNA_BEST)]);
-    var config = {type: 'saveFile', suggestedName: 'image.svg'};
+    var name = 'image.svg';
+    if (CHOSEN_FILE_ENTRY) {
+      name = CHOSEN_FILE_ENTRY.name;
+      name = name.substr(0, name.lastIndexOf('.'));
+      name = name + '.svg';
+    }
+    var config = {type: 'saveFile', suggestedName: name};
     chrome.fileSystem.chooseEntry(config, function(writableEntry) {
       writeFileEntry(writableEntry, blob, function(e) {});
     });

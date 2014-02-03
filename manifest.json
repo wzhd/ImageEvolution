@@ -2,7 +2,7 @@
   "name":"__MSG_appName__",
   "description":"__MSG_appDesc__",
   "offline_enabled": true,
-  "version":"0.0.4",
+  "version":"0.0.6",
   "default_locale": "en",
   "app":{
     "background": {
@@ -14,7 +14,7 @@
     "128":"mona_lisa_128.png"
   },
   "permissions": [
-    {"fileSystem": ["retainEntries"]},
+    {"fileSystem": ["write", "retainEntries"]},
     "storage"
   ]
 }

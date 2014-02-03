@@ -138,6 +138,10 @@ function EvolveCtrl($scope) {
     return val;
   }
 
+  function errorHandler(e) {
+    console.error(e);
+  }
+
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   $scope.stop = function() {
     clearTimeout(EV_ID);
@@ -748,9 +752,57 @@ function EvolveCtrl($scope) {
     $scope.exportingText = serializeDNA(DNA_BEST);
   };
 
-  $scope.export_dna_as_svg = function () {
-      $scope.exportingText = serializeDNAasSVG(DNA_BEST);
+  $scope.save_dna_as_svg = function() {
+    var blob = new Blob([serializeDNAasSVG(DNA_BEST)]);
+    var config = {type: 'saveFile', suggestedName: 'image.svg'};
+    chrome.fileSystem.chooseEntry(config, function(writableEntry) {
+      writeFileEntry(writableEntry, blob, function(e) {});
+    });
   };
+
+  function writeFileEntry(writableEntry, blob, callback) {
+    if (!writableEntry) {
+      console.log('Nothing selected.');
+      return;
+    }
+
+    writableEntry.createWriter(function(writer) {
+
+      writer.onerror = errorHandler;
+      writer.onwriteend = callback;
+
+      if (blob) {
+        writer.truncate(blob.size);
+        waitForIO(writer, function() {
+          writer.seek(0);
+          writer.write(blob);
+        });
+      }
+
+    }, errorHandler);
+  }
+
+  function waitForIO(writer, callback) {
+    // set a watchdog to avoid eventual locking:
+    var start = Date.now();
+    // wait for a few seconds
+    var reentrant = function() {
+      if (writer.readyState === writer.WRITING && Date.now() - start < 4000) {
+        setTimeout(reentrant, 100);
+        return;
+      }
+      if (writer.readyState === writer.WRITING) {
+        console.error('Write operation taking too long, aborting!' +
+                      ' (current writer readyState is ' +
+                      writer.readyState + ')');
+        writer.abort();
+      } else {
+        callback();
+      }
+    };
+    setTimeout(reentrant, 100);
+  }
+
 
   $scope.import_dna = function () {
     deserializeDNA(DNA_BEST, $scope.exportingText);

@@ -50,6 +50,8 @@
     <div class="image">
       {{evolvingText}}<br/>
       <canvas id="canvas_test"></canvas>
+      <br/>
+      <button ng-click="save_dna_as_svg()">{{exportSvgText}}</button>
     </div>
 
     <div id="fitwrap">
@@ -73,7 +75,6 @@
     <div id="dnaformwrap">
       <form name="dnaform">
         <div class="button" id="b_export_dna" ng-click="export_dna()">{{exportDnaText}}</div>
-        <div class="button" id="b_export_svg" ng-click="export_dna_as_svg()">{{exportSvgText}}</div>
         <div class="button" id="b_import_dna" ng-click="import_dna()">{{importDnaText}}</div>
         <br/>
         <textarea name="clipboard" id="clipboard" ng-click="select_all();">{{exportingText}}</textarea>

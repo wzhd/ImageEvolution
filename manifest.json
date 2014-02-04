@@ -10,8 +10,8 @@
     }
   },
   "icons":{
-    "16":"mona_lisa_16.png",
-    "128":"mona_lisa_128.png"
+    "16":"assets/tree_16.png",
+    "128":"assets/tree_128.png"
   },
   "permissions": [
     {"fileSystem": ["write", "retainEntries"]},

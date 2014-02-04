@@ -63,6 +63,9 @@ function EvolveCtrl($scope) {
   var CHOSEN_FILE_ENTRY = null;
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  $scope.showParameters = false;
+
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   $scope.originalText = chrome.i18n.getMessage("original");
   $scope.bestText = chrome.i18n.getMessage("best");
   $scope.evolvingText = chrome.i18n.getMessage("evolving");

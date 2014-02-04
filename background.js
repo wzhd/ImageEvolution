@@ -9,6 +9,6 @@ chrome.app.runtime.onRestarted.addListener(function(){
 var runApp = function() {
   chrome.app.window.create(
     'evolve.html',
-    {id: 'mainwindow', 'bounds': {'width': 1040, 'height': 588} }
+    {id: 'mainwindow', 'bounds': {'width': 822, 'height': 477} }
   );
 };

@@ -1,5 +1,5 @@
 function EvolveCtrl($scope) {
-  var IMG_INIT ="mona_lisa_crop.jpg"; // mona_lisa_crop.jpg mondrian.jpg
+  var IMG_INIT = 'assets/mona_lisa_crop.jpg'; // mona_lisa_crop.jpg mondrian.jpg
   var DEPTH = 4;
 
   var INIT_TYPE = "random"; // random color

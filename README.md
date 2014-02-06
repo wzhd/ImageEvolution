@@ -1,4 +1,4 @@
-<a target="_blank" href="https://chrome.google.com/webstore/detail/image-evolution/ikleegnjmjhbjpoghhlmmbhpchbgollc">![Try it now in CWS](https://raw.github.com/wzhd/ImageEvolution/master/tryitnowbutton.png "Click here to install this sample from the Chrome Web store")</a>
+<a target="_blank" href="https://chrome.google.com/webstore/detail/image-evolution/ikleegnjmjhbjpoghhlmmbhpchbgollc">![Try it now in CWS](https://raw.github.com/wzhd/ImageEvolution/master/assets/tryitnowbutton.png "Click here to install this sample from the Chrome Web store")</a>
 
 # Cool App - Image Evolution
 The goal is to get an image represented as a collection of overlapping polygons of various colors and transparencies.

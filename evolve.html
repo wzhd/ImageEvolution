@@ -53,17 +53,11 @@
 
       <div class="images">
         <div class="image" ng-class="dropClass">
-          {{originalText}}<br/>
           <canvas id="canvas_input"></canvas>
           <br/>
           <button ng-click="chooseFile()">{{chooseFileText}}</button> <p>{{dropText}}</p>
         </div>
         <div class="image">
-          {{bestText}}<br/>
-          <canvas id="canvas_best"></canvas>
-        </div>
-        <div class="image">
-          {{evolvingText}}<br/>
           <canvas id="canvas_test"></canvas>
           <br/>
           <button ng-click="save_dna_as_svg()">{{exportSvgText}}</button>

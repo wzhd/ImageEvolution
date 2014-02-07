@@ -11,11 +11,9 @@ var mutateDNA = mutate_medium; // mutate_soft mutate_medium mutate_hard
 
 var CANVAS_INPUT = 0;
 var CANVAS_OUTPUT = 0;
-var CANVAS_BEST = 0;
 
 var CONTEXT_INPUT = 0;
 var CONTEXT_TEST = 0;
-var CONTEXT_BEST = 0;
 
 var IMAGE = new Image();
 var IWIDTH = 0;
@@ -160,7 +158,6 @@ function refreshStats() {
 
 function redrawDNA() {
   drawDNA(CONTEXT_TEST, DNA_TEST);
-  drawDNA(CONTEXT_BEST, DNA_BEST);
 }
 
 function render_nice_time(s) {
@@ -449,8 +446,6 @@ function evolve() {
 
     COUNTER_BENEFIT++;
     EL_STEP_BENEFIT.innerHTML = COUNTER_BENEFIT;
-
-    drawDNA(CONTEXT_BEST, DNA_BEST);
   }
   else {
     pass_gene_mutation(DNA_BEST, DNA_TEST, CHANGED_SHAPE_INDEX);
@@ -518,9 +513,6 @@ function init_canvas() {
   CANVAS_TEST = document.getElementById('canvas_test');
   CONTEXT_TEST = CANVAS_TEST.getContext('2d');
 
-  CANVAS_BEST = document.getElementById('canvas_best');
-  CONTEXT_BEST = CANVAS_BEST.getContext('2d');
-
   //shrink image if it's too large
   var ratio = 1;
   var imagePerimeter = (IMAGE.width + IMAGE.height) * 2;
@@ -543,9 +535,6 @@ function init_canvas() {
 
   CANVAS_TEST.setAttribute('width', IWIDTH);
   CANVAS_TEST.setAttribute('height', IHEIGHT);
-
-  CANVAS_BEST.setAttribute('width', IWIDTH);
-  CANVAS_BEST.setAttribute('height', IHEIGHT);
 
   // draw the image onto the canvas
   CONTEXT_INPUT.drawImage(canvasCopy,

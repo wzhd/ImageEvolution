@@ -3,9 +3,6 @@ function EvoAppCtrl($scope) {
   $scope.showParameters = false;
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  $scope.originalText = chrome.i18n.getMessage("original");
-  $scope.bestText = chrome.i18n.getMessage("best");
-  $scope.evolvingText = chrome.i18n.getMessage("evolving");
   $scope.chooseFileText = chrome.i18n.getMessage("chooseFile");
   $scope.fitnessText = chrome.i18n.getMessage("fitness");
   $scope.improvementsText = chrome.i18n.getMessage("improvements");
@@ -83,7 +80,7 @@ function EvoAppCtrl($scope) {
   };
 
   $scope.savePng = function() {
-    var blob = Util.dataUriToBlob(CANVAS_BEST.toDataURL());
+    var blob = Util.dataUriToBlob(CANVAS_TEST.toDataURL());
     var name = 'image.png';
     if (CHOSEN_FILE_ENTRY) {
       name = CHOSEN_FILE_ENTRY.name;

@@ -5,15 +5,6 @@
   "appDesc": {
     "message": "使用模拟退火算法生成任意图片的多边形近似"
   },
-  "original": {
-    "message": "模版"
-  },
-  "best": {
-    "message": "最佳"
-  },
-  "evolving": {
-    "message": "进化中"
-  },
   "chooseFile": {
     "message": "选择图片"
   },

@@ -5,15 +5,6 @@
   "appDesc": {
     "message": "Find an approximation of an image using a simulated annealing like optimization algorithm"
   },
-  "original": {
-    "message": "Original"
-  },
-  "best": {
-    "message": "Best"
-  },
-  "evolving": {
-    "message": "Evolving"
-  },
   "chooseFile": {
     "message": "Choose image file"
   },

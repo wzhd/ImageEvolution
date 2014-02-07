@@ -228,5 +228,9 @@ function EvoAppCtrl($scope) {
   document.body.addEventListener("dragleave", dragLeave, false);
   document.body.addEventListener("drop", drop, false);
 
+  $scope.close = function() {
+    window.close();
+  };
+
   init();
 };

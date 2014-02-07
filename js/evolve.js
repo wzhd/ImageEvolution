@@ -94,66 +94,13 @@ function EvolveCtrl($scope) {
   $scope.verticesText = chrome.i18n.getMessage('vertices');
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  function hide(id) {
-    var el = document.getElementById(id);
-    if(el)
-      el.style.display = "none";
-  }
-
-  function show(id) {
-    var el = document.getElementById(id);
-    if(el)
-      el.style.display = "block";
-  }
-
-  function setElement(id, value) {
-    var el = document.getElementById(id);
-    if(el)
-      el.innerHTML = value;
-  }
-
-  function setButtonHighlight(highlighted, others) {
-    for(var i in others) {
-      var el = document.getElementById(others[i]);
-      if(el) {
-        el.style.color = "white";
-        el.style.background = "black";
-      }
-    }
-    var elHighighted = document.getElementById(highlighted);
-    if(elHighighted) {
-      elHighighted.style.color = "white";
-      elHighighted.style.background = "orange";
-    }
-  }
-
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  function rand_int(maxval) {
-    return Math.round(maxval*Math.random());
-  }
-
-  function rand_float(maxval) {
-    return maxval*Math.random();
-  }
-
-  function clamp(val, minval, maxval) {
-    if(val<minval) return minval;
-    if(val>maxval) return maxval;
-    return val;
-  }
-
-  function errorHandler(e) {
-    console.error(e);
-  }
-
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   $scope.stop = function() {
     clearTimeout(EV_ID);
 
     ELAPSED_TIME += get_timestamp() - LAST_START;
 
-    hide("stop");
-    show("start");
+    Util.hide('stop');
+    Util.show('start');
   };
 
   $scope.start = function () {
@@ -162,8 +109,8 @@ function EvolveCtrl($scope) {
     LAST_START = get_timestamp();
     LAST_COUNTER = COUNTER_TOTAL;
 
-    hide("start");
-    show("stop");
+    Util.hide('start');
+    Util.show('stop');
   };
 
   function get_timestamp() {
@@ -172,44 +119,44 @@ function EvolveCtrl($scope) {
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   $scope.addPolygon = function () {
-    ACTUAL_SHAPES = clamp(ACTUAL_SHAPES+1, 1, 1000);
+    ACTUAL_SHAPES = Util.clamp(ACTUAL_SHAPES + 1, 1, 1000);
     if(ACTUAL_SHAPES>MAX_SHAPES) {
       extend_dna_polygons(DNA_TEST);
       extend_dna_polygons(DNA_BEST);
       MAX_SHAPES++;
       pass_gene_mutation(DNA_BEST, DNA_TEST, DNA_BEST.length-1);
     }
-    setElement("polygons", ACTUAL_SHAPES);
+    Util.setElement('polygons', ACTUAL_SHAPES);
 
     redrawDNA();
     refreshStats();
   };
 
   $scope.removePolygon = function () {
-    ACTUAL_SHAPES = clamp(ACTUAL_SHAPES-1, 1, 1000);
-    setElement("polygons", ACTUAL_SHAPES);
+    ACTUAL_SHAPES = Util.clamp(ACTUAL_SHAPES - 1, 1, 1000);
+    Util.setElement('polygons', ACTUAL_SHAPES);
 
     redrawDNA();
     refreshStats();
   };
 
   $scope.addVertex = function () {
-    ACTUAL_POINTS = clamp(ACTUAL_POINTS+1, 3, 1000);
+    ACTUAL_POINTS = Util.clamp(ACTUAL_POINTS + 1, 3, 1000);
     if(ACTUAL_POINTS>MAX_POINTS) {
       extend_dna_vertices(DNA_TEST);
       extend_dna_vertices(DNA_BEST);
       MAX_POINTS++;
       copyDNA(DNA_BEST, DNA_TEST);
     }
-    setElement("vertices", ACTUAL_POINTS);
+    Util.setElement('vertices', ACTUAL_POINTS);
 
     redrawDNA();
     refreshStats();
   };
 
   $scope.removeVertex = function () {
-    ACTUAL_POINTS = clamp(ACTUAL_POINTS-1, 3, 1000);
-    setElement("vertices", ACTUAL_POINTS);
+    ACTUAL_POINTS = Util.clamp(ACTUAL_POINTS - 1, 3, 1000);
+    Util.setElement('vertices', ACTUAL_POINTS);
 
     redrawDNA();
     refreshStats();
@@ -219,7 +166,7 @@ function EvolveCtrl($scope) {
   $scope.setMutation = function (m) {
     var trans = { 'gauss':[mutate_gauss,"b_mut_gauss"], 'soft':[mutate_soft,"b_mut_soft"], 'medium':[mutate_medium,"b_mut_med"], 'hard':[mutate_hard,"b_mut_hard"] };
     mutateDNA = trans[m][0];
-    setButtonHighlight(trans[m][1], ["b_mut_gauss", "b_mut_soft", "b_mut_med", "b_mut_hard"]);
+    Util.setButtonHighlight(trans[m][1], ['b_mut_gauss', 'b_mut_soft', 'b_mut_med', 'b_mut_hard']);
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -227,7 +174,7 @@ function EvolveCtrl($scope) {
     INIT_TYPE = "random";
     resetDna();
     refreshStats();
-    setButtonHighlight("b_dna_random", ["b_dna_random", "b_dna_white", "b_dna_black"]);
+    Util.setButtonHighlight('b_dna_random', ['b_dna_random', 'b_dna_white', 'b_dna_black']);
   };
 
   $scope.setDnaColor = function (r,g,b) {
@@ -238,9 +185,9 @@ function EvolveCtrl($scope) {
     resetDna();
     refreshStats();
     if(r==0&&g==0&&b==0)
-      setButtonHighlight("b_dna_black", ["b_dna_random", "b_dna_white", "b_dna_black"]);
+      Util.setButtonHighlight('b_dna_black', ['b_dna_random', 'b_dna_white', 'b_dna_black']);
     else
-      setButtonHighlight("b_dna_white", ["b_dna_random", "b_dna_white", "b_dna_black"]);
+      Util.setButtonHighlight('b_dna_white', ['b_dna_random', 'b_dna_white', 'b_dna_black']);
   };
 
   function resetDna() {
@@ -375,9 +322,9 @@ function EvolveCtrl($scope) {
   }
 
   function mutate_gauss(dna_out) {
-    CHANGED_SHAPE_INDEX = rand_int(ACTUAL_SHAPES-1);
+    CHANGED_SHAPE_INDEX = Util.rand_int(ACTUAL_SHAPES - 1);
 
-    var roulette = rand_float(2.0);
+    var roulette = Util.rand_float(2.0);
 
     // mutate color
     if(roulette<1) {
@@ -401,7 +348,7 @@ function EvolveCtrl($scope) {
 
     // mutate shape
     else {
-      var CHANGED_POINT_INDEX = rand_int(ACTUAL_POINTS-1);
+      var CHANGED_POINT_INDEX = Util.rand_int(ACTUAL_POINTS - 1);
 
       // x-coordinate
       if(roulette<1.5) {
@@ -417,98 +364,99 @@ function EvolveCtrl($scope) {
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   function mutate_medium(dna_out) {
-    CHANGED_SHAPE_INDEX = rand_int(ACTUAL_SHAPES-1);
+    CHANGED_SHAPE_INDEX = Util.rand_int(ACTUAL_SHAPES - 1);
 
-    var roulette = rand_float(2.0);
+    var roulette = Util.rand_float(2.0);
 
     // mutate color
     if(roulette<1) {
       // red
       if(roulette<0.25) {
-        dna_out[CHANGED_SHAPE_INDEX].color.r = rand_int(255);
+        dna_out[CHANGED_SHAPE_INDEX].color.r = Util.rand_int(255);
       }
       // green
       else if(roulette<0.5) {
-        dna_out[CHANGED_SHAPE_INDEX].color.g = rand_int(255);
+        dna_out[CHANGED_SHAPE_INDEX].color.g = Util.rand_int(255);
       }
       // blue
       else if(roulette<0.75) {
-        dna_out[CHANGED_SHAPE_INDEX].color.b = rand_int(255);
+        dna_out[CHANGED_SHAPE_INDEX].color.b = Util.rand_int(255);
       }
       // alpha
       else if(roulette<1.0) {
-        dna_out[CHANGED_SHAPE_INDEX].color.a = rand_float(1.0);
+        dna_out[CHANGED_SHAPE_INDEX].color.a = Util.rand_float(1.0);
       }
     }
 
     // mutate shape
     else {
-      var CHANGED_POINT_INDEX = rand_int(ACTUAL_POINTS-1);
+      var CHANGED_POINT_INDEX = Util.rand_int(ACTUAL_POINTS - 1);
 
       // x-coordinate
       if(roulette<1.5) {
-        dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].x = rand_int(IWIDTH);
+        dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].x = Util.rand_int(IWIDTH);
       }
 
       // y-coordinate
       else {
-        dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].y = rand_int(IHEIGHT);
+        dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].y = Util.rand_int(IHEIGHT);
       }
     }
   }
 
   function mutate_hard(dna_out) {
-    CHANGED_SHAPE_INDEX = rand_int(ACTUAL_SHAPES-1);
+    CHANGED_SHAPE_INDEX = Util.rand_int(ACTUAL_SHAPES - 1);
 
-    dna_out[CHANGED_SHAPE_INDEX].color.r = rand_int(255);
-    dna_out[CHANGED_SHAPE_INDEX].color.g = rand_int(255);
-    dna_out[CHANGED_SHAPE_INDEX].color.b = rand_int(255);
-    dna_out[CHANGED_SHAPE_INDEX].color.a = rand_float(1.0);
-    var CHANGED_POINT_INDEX = rand_int(ACTUAL_POINTS-1);
+    dna_out[CHANGED_SHAPE_INDEX].color.r = Util.rand_int(255);
+    dna_out[CHANGED_SHAPE_INDEX].color.g = Util.rand_int(255);
+    dna_out[CHANGED_SHAPE_INDEX].color.b = Util.rand_int(255);
+    dna_out[CHANGED_SHAPE_INDEX].color.a = Util.rand_float(1.0);
+    var CHANGED_POINT_INDEX = Util.rand_int(ACTUAL_POINTS - 1);
 
-    dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].x = rand_int(IWIDTH);
-    dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].y = rand_int(IHEIGHT);
+    dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].x = Util.rand_int(IWIDTH);
+    dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].y = Util.rand_int(IHEIGHT);
   }
 
   function mutate_soft(dna_out) {
-    CHANGED_SHAPE_INDEX = rand_int(ACTUAL_SHAPES-1);
+    CHANGED_SHAPE_INDEX = Util.rand_int(ACTUAL_SHAPES - 1);
 
-    var roulette = rand_float(2.0);
+    var roulette = Util.rand_float(2.0);
 
-    var delta = -1+rand_int(3);
+    var delta = -1 + Util.rand_int(3);
 
     // mutate color
     if(roulette<1) {
       // red
       if(roulette<0.25) {
-        dna_out[CHANGED_SHAPE_INDEX].color.r = clamp(dna_out[CHANGED_SHAPE_INDEX].color.r+delta, 0, 255);
+        dna_out[CHANGED_SHAPE_INDEX].color.r = Util.clamp(dna_out[CHANGED_SHAPE_INDEX].color.r + delta, 0, 255);
       }
       // green
       else if(roulette<0.5) {
-        dna_out[CHANGED_SHAPE_INDEX].color.g = clamp(dna_out[CHANGED_SHAPE_INDEX].color.g+delta, 0, 255);
+        dna_out[CHANGED_SHAPE_INDEX].color.g = Util.clamp(dna_out[CHANGED_SHAPE_INDEX].color.g + delta, 0, 255);
       }
       // blue
       else if(roulette<0.75) {
-        dna_out[CHANGED_SHAPE_INDEX].color.b = clamp(dna_out[CHANGED_SHAPE_INDEX].color.b+delta, 0, 255);
+        dna_out[CHANGED_SHAPE_INDEX].color.b = Util.clamp(dna_out[CHANGED_SHAPE_INDEX].color.b + delta, 0, 255);
       }
       // alpha
       else if(roulette<1.0) {
-        dna_out[CHANGED_SHAPE_INDEX].color.a = clamp(dna_out[CHANGED_SHAPE_INDEX].color.a+0.1*delta, 0.0, 1.0);
+        dna_out[CHANGED_SHAPE_INDEX].color.a = Util.clamp(dna_out[CHANGED_SHAPE_INDEX].color.a + 0.1 * delta, 0.0, 1.0);
       }
     }
 
     // mutate shape
     else {
-      var CHANGED_POINT_INDEX = rand_int(ACTUAL_POINTS-1);
+      var CHANGED_POINT_INDEX = Util.rand_int(ACTUAL_POINTS - 1);
 
       // x-coordinate
       if(roulette<1.5) {
-        dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].x = clamp(dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].x+delta, 0, IWIDTH);
+        dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].x =
+          Util.clamp(dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].x + delta, 0, IWIDTH);
       }
 
       // y-coordinate
       else {
-        dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].y = clamp(dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].y+delta, 0, IHEIGHT);
+        dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].y = Util.clamp(dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].y+delta, 0, IHEIGHT);
       }
     }
   }
@@ -583,11 +531,11 @@ function EvolveCtrl($scope) {
     for(var i=0;i<MAX_SHAPES;i++) {
       var points = new Array(MAX_POINTS);
       for(var j=0;j<MAX_POINTS;j++) {
-        points[j] = {'x':rand_int(IWIDTH),'y':rand_int(IHEIGHT)};
+        points[j] = {'x': Util.rand_int(IWIDTH), 'y': Util.rand_int(IHEIGHT)};
       }
       var color = {};
       if(INIT_TYPE=="random")
-        color = {'r':rand_int(255),'g':rand_int(255),'b':rand_int(255),'a':0.001};
+        color = {'r': Util.rand_int(255), 'g': Util.rand_int(255), 'b': Util.rand_int(255), 'a': 0.001};
       else
         color = {'r':INIT_R,'g':INIT_G,'b':INIT_B,'a':INIT_A};
       var shape = {
@@ -601,11 +549,11 @@ function EvolveCtrl($scope) {
   function extend_dna_polygons(dna) {
     var points = new Array(MAX_POINTS);
     for(var j=0;j<MAX_POINTS;j++) {
-      points[j] = {'x':rand_int(IWIDTH),'y':rand_int(IHEIGHT)};
+      points[j] = {'x': Util.rand_int(IWIDTH), 'y': Util.rand_int(IHEIGHT)};
     }
     var color = {};
     if(INIT_TYPE=="random")
-      color = {'r':rand_int(255),'g':rand_int(255),'b':rand_int(255),'a':0.001};
+      color = {'r': Util.rand_int(255), 'g': Util.rand_int(255), 'b': Util.rand_int(255), 'a': 0.001};
     else
       color = {'r':INIT_R,'g':INIT_G,'b':INIT_B,'a':INIT_A};
     var shape = {'color':color, 'shape':points};
@@ -614,7 +562,7 @@ function EvolveCtrl($scope) {
 
   function extend_dna_vertices(dna) {
     for(var i=0;i<MAX_SHAPES;i++) {
-      var point = {'x':rand_int(IWIDTH),'y':rand_int(IHEIGHT)};
+      var point = {'x': Util.rand_int(IWIDTH), 'y': Util.rand_int(IHEIGHT)};
       dna[i].shape.push(point);
     }
   }
@@ -771,7 +719,7 @@ function EvolveCtrl($scope) {
   };
 
   $scope.savePng = function() {
-    var blob = dataUriToBlob(CANVAS_BEST.toDataURL());
+    var blob = Util.dataUriToBlob(CANVAS_BEST.toDataURL());
     var name = 'image.png';
     if (CHOSEN_FILE_ENTRY) {
       name = CHOSEN_FILE_ENTRY.name;
@@ -784,29 +732,6 @@ function EvolveCtrl($scope) {
     });
   };
 
-  function dataUriToBlob(dataURI) {
-    // adapted from:
-    // http://stackoverflow.com/questions/6431281/save-png-canvas-image-to-html5-storage-javascript
-
-    // convert base64 to raw binary data held in a string
-    // doesn't handle URLEncoded DataURIs
-    var byteString = atob(dataURI.split(',')[1]);
-
-    // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
-    // write the bytes of the string to an ArrayBuffer
-    var ab = new ArrayBuffer(byteString.length);
-    var ia = new Uint8Array(ab);
-    for (var i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-
-    // write the ArrayBuffer to a blob, and you're done
-    var blob = new Blob([ab], { "type": mimeString });
-    return blob;
-  };
-
   function writeFileEntry(writableEntry, blob, callback) {
     if (!writableEntry) {
       console.log('Nothing selected.');
@@ -815,7 +740,7 @@ function EvolveCtrl($scope) {
 
     writableEntry.createWriter(function(writer) {
 
-      writer.onerror = errorHandler;
+      writer.onerror = Util.errorHandler;
       writer.onwriteend = callback;
 
       if (blob) {
@@ -826,7 +751,7 @@ function EvolveCtrl($scope) {
         });
       }
 
-    }, errorHandler);
+    }, Util.errorHandler);
   }
 
   function waitForIO(writer, callback) {
@@ -860,8 +785,8 @@ function EvolveCtrl($scope) {
     redrawDNA();
     refreshStats();
 
-    setElement("polygons", ACTUAL_SHAPES);
-    setElement("vertices", ACTUAL_POINTS);
+    Util.setElement('polygons', ACTUAL_SHAPES);
+    Util.setElement('vertices', ACTUAL_POINTS);
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -906,8 +831,8 @@ function EvolveCtrl($scope) {
     };
     IMAGE.src = IMG_INIT;
 
-    setButtonHighlight("b_dna_random", ["b_dna_random", "b_dna_white", "b_dna_black"]);
-    setButtonHighlight("b_mut_med", ["b_mut_gauss", "b_mut_soft", "b_mut_med", "b_mut_hard"]);
+    Util.setButtonHighlight('b_dna_random', ['b_dna_random', 'b_dna_white', 'b_dna_black']);
+    Util.setButtonHighlight('b_mut_med', ['b_mut_gauss', 'b_mut_soft', 'b_mut_med', 'b_mut_hard']);
   };
 
   $scope.chooseFile = function() {

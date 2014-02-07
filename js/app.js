@@ -1,4 +1,4 @@
-function EvolveCtrl($scope) {
+function EvoAppCtrl($scope) {
   var IMG_INIT = 'assets/mona_lisa_crop.jpg'; // mona_lisa_crop.jpg mondrian.jpg
   var DEPTH = 4;
 

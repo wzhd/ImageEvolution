@@ -79,3 +79,8 @@ Util.dataUriToBlob = function(dataURI) {
   var blob = new Blob([ab], { 'type': mimeString });
   return blob;
 };
+
+//time
+Util.get_timestamp = function() {
+  return 0.001 * (new Date).getTime();
+}

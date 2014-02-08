@@ -52,16 +52,16 @@
     <div id="main">
 
       <div>
-        <div class="image" ng-class="dropClass">
+        <div class="image" ng-class="dropClass" ng-mouseover="showControl(uploaderStyle)" ng-mouseout="hideControl(uploaderStyle)">
           <canvas id="canvas_input"></canvas>
-          <div class="floating">
+          <div class="floating" ng-style="uploaderStyle">
             <button ng-click="chooseFile()">{{chooseFileText}}</button>
             <p>{{dropText}}</p>
           </div>
         </div>
-        <div class="image">
+        <div class="image" ng-mouseover="showControl(exporterStyle)" ng-mouseout="hideControl(exporterStyle)">
           <canvas id="canvas_test"></canvas>
-          <div class="floating">
+          <div class="floating" ng-style="exporterStyle">
             <button  ng-click="save_dna_as_svg()">{{exportSvgText}}</button>
             <button  ng-click="savePng()">{{savePngText}}</button>
           </div>

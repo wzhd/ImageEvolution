@@ -1,6 +1,17 @@
 function EvoAppCtrl($scope) {
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   $scope.showParameters = false;
+  $scope.uploaderStyle = { opacity: '0.4' };
+  $scope.exporterStyle = { opacity: '0.4' };
+  $scope.showControl = function(style) {
+    style.opacity = '1.0';
+  };
+  $scope.hideControl = function(style) {
+    if (CHOSEN_FILE_ENTRY)
+      style.opacity = '0.0';
+    else
+      style.opacity = '0.4';
+  };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   $scope.chooseFileText = chrome.i18n.getMessage("chooseFile");

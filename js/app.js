@@ -161,12 +161,6 @@ function EvoAppCtrl($scope) {
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  function select_all()
-  {
-    var text_val = document.dnaform.clipboard;
-    text_val.focus();
-    text_val.select();
-  }
 
   $scope.chooseFile = function() {
     var accepts = [{

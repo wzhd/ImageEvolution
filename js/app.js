@@ -15,6 +15,7 @@ function EvoAppCtrl($scope) {
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   $scope.chooseFileText = chrome.i18n.getMessage("chooseFile");
+  $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
   $scope.fitnessText = chrome.i18n.getMessage("fitness");
   $scope.improvementsText = chrome.i18n.getMessage("improvements");
   $scope.mutationsText = chrome.i18n.getMessage('mutations');
@@ -158,14 +159,14 @@ function EvoAppCtrl($scope) {
 
   function loadFileEntry() {
     if (!CHOSEN_FILE_ENTRY) {
-      $scope.dropText = chrome.i18n.getMessage('loadFileFailure');
+      console.log('Sorry, could not load file');
     }
     else {
       CHOSEN_FILE_ENTRY.file(function(file) {
         $scope.set_image(window.URL.createObjectURL(file));
       });
 
-      $scope.dropText = chrome.i18n.getMessage('loadFileSuccess');
+      console.log('Image file loaded');
     }
   };
 
@@ -189,24 +190,24 @@ function EvoAppCtrl($scope) {
     });
   };
 
-  $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
-
   var dragOver = function(e) {
     e.stopPropagation();
     e.preventDefault();
     var valid = e.dataTransfer && e.dataTransfer.types
           && (e.dataTransfer.types.indexOf('Files') >= 0);
     $scope.$apply(function() {
-      $scope.dropText = valid ?
-        chrome.i18n.getMessage('dragImageValid')
-        : chrome.i18n.getMessage('dragImageInvalid');
+      if (valid) {
+        console.log('valid image');
+      }
+      else {
+        console.log('invalid image');
+      }
       $scope.dropClass = valid ? "dragging" : "invalid-dragging";
     });
   };
 
   var dragLeave = function(e) {
     $scope.$apply(function() {
-      $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
       $scope.dropClass = '';
     });
   };
@@ -230,7 +231,6 @@ function EvoAppCtrl($scope) {
     loadFileEntry(CHOSEN_FILE_ENTRY);
 
     $scope.$apply(function() {
-      $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
       $scope.dropClass =  '';
     });
   };

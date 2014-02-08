@@ -4,7 +4,7 @@ h2 { margin-top:1.75em }
 p { font-size: 0.5em }
 canvas { border:solid 1px #000 }
 span { display: inline-block }
-.image { display: inline-block; vertical-align:top; margin:0 0.5em 0 0; font-size:2em }
+.image { display: inline-block; vertical-align:top; margin:0 0.5em 0 0; font-size:2em; position:relative; }
 ul { list-style-type:square }
 a:hover { background:#1e4881; color:white; text-decoration:none }
 #algo, #dnaformat { background:#eee; padding:1em; margin-top:1em; border-left:solid 10px #999 }
@@ -49,6 +49,11 @@ a:hover { background:#1e4881; color:white; text-decoration:none }
     background-color: #a00000;
 }
 #main { float: left }
+.floating {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 #fitwrap { font-weight:bold; font-size:1em; color:#999; }
 #fitness, #step_benefit, #step_total { font-size:2em;}
 #fitness { color:#000; }

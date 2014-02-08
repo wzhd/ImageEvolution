@@ -8,20 +8,8 @@
   "chooseFile": {
     "message": "Choose image file"
   },
-  "loadFileFailure": {
-    "message": "Sorry, could not load file"
-  },
-  "loadFileSuccess": {
-    "message": "Image file loaded"
-  },
   "dragImagePrompt": {
     "message": "Or drag any image here"
-  },
-  "dragImageValid": {
-    "message": "Drop it here"
-  },
-  "dragImageInvalid": {
-    "message": "Only images are supported"
   },
   "fitness": {
     "message": "Fitness"

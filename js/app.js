@@ -15,6 +15,7 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   this.chooseFileText = chrome.i18n.getMessage('chooseFile');
+  this.dropText = chrome.i18n.getMessage('dragImagePrompt');
   this.fitnessText = chrome.i18n.getMessage('fitness');
   this.improvementsText = chrome.i18n.getMessage('improvements');
   this.mutationsText = chrome.i18n.getMessage('mutations');
@@ -158,14 +159,14 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
 
   function loadFileEntry() {
     if (!CHOSEN_FILE_ENTRY) {
-      this.dropText = chrome.i18n.getMessage('loadFileFailure');
+      console.log('Sorry, could not load file');
     }
     else {
       CHOSEN_FILE_ENTRY.file(function(file) {
         this.set_image(window.URL.createObjectURL(file));
       });
 
-      this.dropText = chrome.i18n.getMessage('loadFileSuccess');
+      console.log('Image file loaded');
     }
   };
 
@@ -189,21 +190,21 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
     });
   };
 
-  this.dropText = chrome.i18n.getMessage('dragImagePrompt');
-
   var dragOver = function(e) {
     e.stopPropagation();
     e.preventDefault();
     var valid = e.dataTransfer && e.dataTransfer.types
           && (e.dataTransfer.types.indexOf('Files') >= 0);
-    this.dropText = valid ?
-        chrome.i18n.getMessage('dragImageValid')
-        : chrome.i18n.getMessage('dragImageInvalid');
+    if (valid) {
+        console.log('valid image');
+      }
+      else {
+        console.log('invalid image');
+      }
     this.dropClass = valid ? "dragging" : "invalid-dragging";
   };
 
   var dragLeave = function(e) {
-    this.dropText = chrome.i18n.getMessage('dragImagePrompt');
     this.dropClass = '';
   };
 
@@ -225,7 +226,6 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
 
     loadFileEntry(CHOSEN_FILE_ENTRY);
 
-    this.dropText = chrome.i18n.getMessage('dragImagePrompt');
     this.dropClass = '';
   };
 

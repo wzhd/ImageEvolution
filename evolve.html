@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html ng-app ng-csp>
+<html ng-app="EvoApp">
 
   <!--
       The MIT License
@@ -37,14 +37,14 @@
     <script src="js/evolve.js"></script>
     <script src="js/app.js"></script>
   </head>
-  <body ng-controller="EvoAppCtrl">
+  <body ng-controller="EvoAppCtrl as evo">
 
     <div id="titlebar">
       <div id="titlebar-icon">
         <img src="assets/tree_16.png" title="It evolves!">
       </div>
       <div id="titlebar-text">Image Evolution</div>
-      <div id="titlebar-close-button" ng-click="close()">
+      <div id="titlebar-close-button" ng-click="evo.close()">
         x
       </div>
     </div>
@@ -52,67 +52,67 @@
     <div id="main">
 
       <div>
-        <div class="image" ng-class="dropClass" ng-mouseover="showControl(uploaderStyle)" ng-mouseout="hideControl(uploaderStyle)">
+        <div class="image" ng-class="evo.dropClass" ng-mouseover="evo.showControl(evo.uploaderStyle)" ng-mouseout="evo.hideControl(evo.uploaderStyle)">
           <canvas id="canvas_input"></canvas>
-          <div class="floating" ng-style="uploaderStyle">
-            <button ng-click="chooseFile()">{{chooseFileText}}</button>
-            <p>{{dropText}}</p>
+          <div class="floating" ng-style="evo.uploaderStyle">
+            <button ng-click="evo.chooseFile()">{{evo.chooseFileText}}</button>
+            <p>{{evo.dropText}}</p>
           </div>
         </div>
-        <div class="image" ng-mouseover="showControl(exporterStyle)" ng-mouseout="hideControl(exporterStyle)">
+        <div class="image" ng-mouseover="evo.showControl(evo.exporterStyle)" ng-mouseout="evo.hideControl(evo.exporterStyle)">
           <canvas id="canvas_test"></canvas>
-          <div class="floating" ng-style="exporterStyle">
-            <button  ng-click="save_dna_as_svg()">{{exportSvgText}}</button>
-            <button  ng-click="savePng()">{{savePngText}}</button>
+          <div class="floating" ng-style="evo.exporterStyle">
+            <button  ng-click="evo.save_dna_as_svg()">{{evo.exportSvgText}}</button>
+            <button  ng-click="evo.savePng()">{{evo.savePngText}}</button>
           </div>
         </div>
       </div>
 
       <div id="fitwrap">
         <div id="stats">
-          <span id="fitness">?</span>{{fitnessText}}
-          <span id="step_benefit">0</span>{{improvementsText}}<br/>
-          <span id="step_total">0</span>{{mutationsText}}
-          <span id="time">0</span>{{elapsedTimeText}}
-          <span id="mutsec">?</span>{{mutationsPerSecondText}}
+          <span id="fitness">?</span>{{evo.fitnessText}}
+          <span id="step_benefit">0</span>{{evo.improvementsText}}<br/>
+          <span id="step_total">0</span>{{evo.mutationsText}}
+          <span id="time">0</span>{{evo.elapsedTimeText}}
+          <span id="mutsec">?</span>{{evo.mutationsPerSecondText}}
         </div>
-        <div id="toggle" class="button" ng-click="showParameters = !showParameters">▶</div>
-        <div id="start" class="button" ng-click="start()">{{startText}}</div>
-        <div id="stop" class="button" ng-click="stop()">{{stopText}}</div>
+        <div id="toggle" class="button" ng-click="evo.showParameters = !evo.showParameters">▶</div>
+        <div id="start" class="button" ng-click="evo.start()">{{evo.startText}}</div>
+        <div id="stop" class="button" ng-click="evo.stop()">{{evo.stopText}}</div>
       </div>
 
     </div>
 
-    <aside ng-show="showParameters" id="parameters">
+    <aside ng-show="evo.showParameters" id="parameters">
 
       <div id="dnaformwrap">
         <form name="dnaform">
-          <div class="button" id="b_export_dna" ng-click="export_dna()">{{exportDnaText}}</div>
-          <div class="button" id="b_import_dna" ng-click="import_dna()">{{importDnaText}}</div>
+          <div class="button" id="b_export_dna" ng-click="evo.export_dna()">{{evo.exportDnaText}}</div>
+          <div class="button" id="b_import_dna" ng-click="evo.import_dna()">{{evo.importDnaText}}</div>
           <br/>
-          <textarea name="clipboard" id="clipboard" ng-click="select_all();">{{exportingText}}</textarea>
+          <textarea name="clipboard" id="clipboard" ng-click="evo.select_all();">{{evo.exportingText}}</textarea>
         </form>
       </div>
 
       <div>
         <div id="mutationtype">
-          <div class="parname">{{mutationText}}</div>
-          <div class="button" id="b_mut_gauss" ng-click="setMutation('gauss')">{{gaussianText}}</div>
-          <div class="button" id="b_mut_soft" ng-click="setMutation('soft')">{{softText}}</div>
-          <div class="button" id="b_mut_med" ng-click="setMutation('medium')">{{mediumText}}</div>
-          <div class="button" id="b_mut_hard" ng-click="setMutation('hard')">{{hardText}}</div>
+          <div class="parname">{{evo.mutationText}}</div>
+          <div class="button" id="b_mut_gauss" ng-click="evo.setMutation('gauss')">{{evo.gaussianText}}</div>
+          <div class="button" id="b_mut_soft" ng-click="evo.setMutation('soft')">{{evo.softText}}</div>
+          <div class="button" id="b_mut_med" ng-click="evo.setMutation('medium')">{{evo.mediumText}}</div>
+          <div class="button" id="b_mut_hard" ng-click="evo.setMutation('hard')">{{evo.hardText}}</div>
         </div>
 
         <div id="resetdna">
-          <div class="parname">{{initializeDnaText}}</div>
-          <div class="button" id="b_dna_random" ng-click="setDnaRandom()">{{colourText}}</div>
-          <div class="button" id="b_dna_white" ng-click="setDnaColor(254,254,254)">{{whiteText}}</div>
-          <div class="button" id="b_dna_black" ng-click="setDnaColor(0,0,0)">{{blackText}}</div>
+          <div class="parname">{{evo.initializeDnaText}}</div>
+          <div class="button" id="b_dna_random" ng-click="evo.setDnaRandom()">{{evo.colourText}}</div>
+          <div class="button" id="b_dna_white" ng-click="evo.setDnaColor(254,254,254)">{{evo.whiteText}}</div>
+          <div class="button" id="b_dna_black" ng-click="evo.setDnaColor(0,0,0)">{{evo.blackText}}</div>
         </div>
 
-        <div id="geometry" ng-init="polygons=50; vertices=6">
-          {{polygonsText}}: <input type="number" min="1" max="1000" ng-change="setPolygons()" ng-model="polygons" required>
-          {{verticesText}}: <input type="number" min="3" max="1000" ng-change="setVertices()" ng-model="vertices" required>
+        <div id="geometry" ng-init="evo.polygons=50; evo.vertices=6">
+          {{evo.polygonsText}}: <input type="number" min="1" max="1000" ng-change="evo.setPolygons()" ng-model="evo.polygons" required>
+          {{evo.verticesText}}: <input type="number" min="3" max="1000" ng-change="evo.setVertices()" ng-model="evo.vertices" required>
         </div>
       </div>
 

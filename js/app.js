@@ -1,12 +1,12 @@
-function EvoAppCtrl($scope) {
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  $scope.showParameters = false;
-  $scope.uploaderStyle = { opacity: '0.4' };
-  $scope.exporterStyle = { opacity: '0.4' };
-  $scope.showControl = function(style) {
+angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
+
+  this.showParameters = false;
+  this.uploaderStyle = { opacity: '0.4' };
+  this.exporterStyle = { opacity: '0.4' };
+  this.showControl = function(style) {
     style.opacity = '1.0';
   };
-  $scope.hideControl = function(style) {
+  this.hideControl = function(style) {
     if (CHOSEN_FILE_ENTRY)
       style.opacity = '0.0';
     else
@@ -14,32 +14,32 @@ function EvoAppCtrl($scope) {
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  $scope.chooseFileText = chrome.i18n.getMessage("chooseFile");
-  $scope.fitnessText = chrome.i18n.getMessage("fitness");
-  $scope.improvementsText = chrome.i18n.getMessage("improvements");
-  $scope.mutationsText = chrome.i18n.getMessage('mutations');
-  $scope.startText = chrome.i18n.getMessage('start');
-  $scope.stopText = chrome.i18n.getMessage('stop');
-  $scope.elapsedTimeText = chrome.i18n.getMessage('elapsedTime');
-  $scope.mutationsPerSecondText = chrome.i18n.getMessage('mutationsPerSecond');
-  $scope.exportDnaText = chrome.i18n.getMessage('exportDna');
-  $scope.exportSvgText = chrome.i18n.getMessage('exportSvg');
-  $scope.savePngText = chrome.i18n.getMessage('savePng');
-  $scope.importDnaText = chrome.i18n.getMessage('importDna');
-  $scope.mutationText = chrome.i18n.getMessage('mutation');
-  $scope.gaussianText = chrome.i18n.getMessage('gaussian');
-  $scope.softText = chrome.i18n.getMessage('soft');
-  $scope.mediumText = chrome.i18n.getMessage('medium');
-  $scope.hardText = chrome.i18n.getMessage('hard');
-  $scope.initializeDnaText = chrome.i18n.getMessage('initializeDna');
-  $scope.colourText = chrome.i18n.getMessage('colour');
-  $scope.whiteText = chrome.i18n.getMessage('white');
-  $scope.blackText = chrome.i18n.getMessage('black');
-  $scope.polygonsText = chrome.i18n.getMessage('polygons');
-  $scope.verticesText = chrome.i18n.getMessage('vertices');
+  this.chooseFileText = chrome.i18n.getMessage('chooseFile');
+  this.fitnessText = chrome.i18n.getMessage('fitness');
+  this.improvementsText = chrome.i18n.getMessage('improvements');
+  this.mutationsText = chrome.i18n.getMessage('mutations');
+  this.startText = chrome.i18n.getMessage('start');
+  this.stopText = chrome.i18n.getMessage('stop');
+  this.elapsedTimeText = chrome.i18n.getMessage('elapsedTime');
+  this.mutationsPerSecondText = chrome.i18n.getMessage('mutationsPerSecond');
+  this.exportDnaText = chrome.i18n.getMessage('exportDna');
+  this.exportSvgText = chrome.i18n.getMessage('exportSvg');
+  this.savePngText = chrome.i18n.getMessage('savePng');
+  this.importDnaText = chrome.i18n.getMessage('importDna');
+  this.mutationText = chrome.i18n.getMessage('mutation');
+  this.gaussianText = chrome.i18n.getMessage('gaussian');
+  this.softText = chrome.i18n.getMessage('soft');
+  this.mediumText = chrome.i18n.getMessage('medium');
+  this.hardText = chrome.i18n.getMessage('hard');
+  this.initializeDnaText = chrome.i18n.getMessage('initializeDna');
+  this.colourText = chrome.i18n.getMessage('colour');
+  this.whiteText = chrome.i18n.getMessage('white');
+  this.blackText = chrome.i18n.getMessage('black');
+  this.polygonsText = chrome.i18n.getMessage('polygons');
+  this.verticesText = chrome.i18n.getMessage('vertices');
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  $scope.stop = function() {
+  this.stop = function() {
     clearTimeout(EV_ID);
 
     ELAPSED_TIME += Util.get_timestamp() - LAST_START;
@@ -48,7 +48,7 @@ function EvoAppCtrl($scope) {
     Util.show('start');
   };
 
-  $scope.start = function () {
+  this.start = function() {
     EV_ID = setInterval(evolve, EV_TIMEOUT);
 
     LAST_START = Util.get_timestamp();
@@ -59,33 +59,33 @@ function EvoAppCtrl($scope) {
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  $scope.setPolygons = function() {
-    if (isNaN($scope.polygons))
+  this.setPolygons = function() {
+    if (isNaN(this.polygons))
       return;
-    poly = Util.clamp($scope.polygons, 1, 1000);
+    poly = Util.clamp(this.polygons, 1, 1000);
     setPolygons(poly);
   };
 
-  $scope.setVertices = function() {
-    if (isNaN($scope.vertices))
+  this.setVertices = function() {
+    if (isNaN(this.vertices))
       return;
-    vert = Util.clamp($scope.vertices, 3, 1000);
+    vert = Util.clamp(this.vertices, 3, 1000);
     setVertices(vert);
   };
-  $scope.setMutation = setMutation;
-  $scope.setDnaRandom = setDnaRandom;
-  $scope.setDnaColor = setDnaColor;
-  $scope.set_image = set_image;
+  this.setMutation = setMutation;
+  this.setDnaRandom = setDnaRandom;
+  this.setDnaColor = setDnaColor;
+  this.set_image = set_image;
 
-  $scope.import_dna = function() {
-    import_dna($scope.exportingText);
+  this.import_dna = function() {
+    import_dna(this.exportingText);
   };
 
-  $scope.export_dna = function () {
-    $scope.exportingText = serializeDNA(DNA_BEST);
+  this.export_dna = function() {
+    this.exportingText = serializeDNA(DNA_BEST);
   };
 
-  $scope.save_dna_as_svg = function() {
+  this.save_dna_as_svg = function() {
     var blob = new Blob([serializeDNAasSVG(DNA_BEST)]);
     var name = 'image.svg';
     if (CHOSEN_FILE_ENTRY) {
@@ -99,7 +99,7 @@ function EvoAppCtrl($scope) {
     });
   };
 
-  $scope.savePng = function() {
+  this.savePng = function() {
     var blob = Util.dataUriToBlob(CANVAS_TEST.toDataURL());
     var name = 'image.png';
     if (CHOSEN_FILE_ENTRY) {
@@ -158,20 +158,20 @@ function EvoAppCtrl($scope) {
 
   function loadFileEntry() {
     if (!CHOSEN_FILE_ENTRY) {
-      $scope.dropText = chrome.i18n.getMessage('loadFileFailure');
+      this.dropText = chrome.i18n.getMessage('loadFileFailure');
     }
     else {
       CHOSEN_FILE_ENTRY.file(function(file) {
-        $scope.set_image(window.URL.createObjectURL(file));
+        this.set_image(window.URL.createObjectURL(file));
       });
 
-      $scope.dropText = chrome.i18n.getMessage('loadFileSuccess');
+      this.dropText = chrome.i18n.getMessage('loadFileSuccess');
     }
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  $scope.chooseFile = function() {
+  this.chooseFile = function() {
     var accepts = [{
       mimeTypes: ['image/*'],
       extensions: ['jpeg', 'png']
@@ -189,26 +189,22 @@ function EvoAppCtrl($scope) {
     });
   };
 
-  $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
+  this.dropText = chrome.i18n.getMessage('dragImagePrompt');
 
   var dragOver = function(e) {
     e.stopPropagation();
     e.preventDefault();
     var valid = e.dataTransfer && e.dataTransfer.types
           && (e.dataTransfer.types.indexOf('Files') >= 0);
-    $scope.$apply(function() {
-      $scope.dropText = valid ?
+    this.dropText = valid ?
         chrome.i18n.getMessage('dragImageValid')
         : chrome.i18n.getMessage('dragImageInvalid');
-      $scope.dropClass = valid ? "dragging" : "invalid-dragging";
-    });
+    this.dropClass = valid ? "dragging" : "invalid-dragging";
   };
 
   var dragLeave = function(e) {
-    $scope.$apply(function() {
-      $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
-      $scope.dropClass = '';
-    });
+    this.dropText = chrome.i18n.getMessage('dragImagePrompt');
+    this.dropClass = '';
   };
 
   var drop = function(e) {
@@ -229,19 +225,17 @@ function EvoAppCtrl($scope) {
 
     loadFileEntry(CHOSEN_FILE_ENTRY);
 
-    $scope.$apply(function() {
-      $scope.dropText = chrome.i18n.getMessage('dragImagePrompt');
-      $scope.dropClass =  '';
-    });
+    this.dropText = chrome.i18n.getMessage('dragImagePrompt');
+    this.dropClass = '';
   };
 
   document.body.addEventListener("dragover", dragOver, false);
   document.body.addEventListener("dragleave", dragLeave, false);
   document.body.addEventListener("drop", drop, false);
 
-  $scope.close = function() {
+  this.close = function() {
     window.close();
   };
 
   init();
-};
+});

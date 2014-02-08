@@ -110,9 +110,9 @@
           <div class="button" id="b_dna_black" ng-click="setDnaColor(0,0,0)">{{blackText}}</div>
         </div>
 
-        <div id="geometry">
-          <div class="button" ng-click="removePolygon()">-</div> <div class="button" ng-click="addPolygon()">+</div> <span class="parname pargeo"><span id="polygons">50</span>{{polygonsText}}</span> <br/>
-          <div class="button" ng-click="removeVertex()">-</div> <div class="button" ng-click="addVertex()">+</div> <span class="parname pargeo"><span id="vertices">6</span>{{verticesText}}</span>
+        <div id="geometry" ng-init="polygons=50; vertices=6">
+          {{polygonsText}}: <input type="number" min="1" max="1000" ng-change="setPolygons()" ng-model="polygons" required>
+          {{verticesText}}: <input type="number" min="3" max="1000" ng-change="setVertices()" ng-model="vertices" required>
         </div>
       </div>
 

@@ -59,10 +59,19 @@ function EvoAppCtrl($scope) {
   };
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  $scope.addPolygon = addPolygon;
-  $scope.removePolygon = removePolygon;
-  $scope.addVertex = addVertex;
-  $scope.removeVertex = removeVertex;
+  $scope.setPolygons = function() {
+    if (isNaN($scope.polygons))
+      return;
+    poly = Util.clamp($scope.polygons, 1, 1000);
+    setPolygons(poly);
+  };
+
+  $scope.setVertices = function() {
+    if (isNaN($scope.vertices))
+      return;
+    vert = Util.clamp($scope.vertices, 3, 1000);
+    setVertices(vert);
+  };
   $scope.setMutation = setMutation;
   $scope.setDnaRandom = setDnaRandom;
   $scope.setDnaColor = setDnaColor;

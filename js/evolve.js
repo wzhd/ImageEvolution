@@ -36,14 +36,11 @@ var EL_FITNESS = 0;
 var EL_ELAPSED_TIME = 0;
 var EL_MUTSEC = 0;
 
-var MAX_SHAPES = 50; // max capacity
-var MAX_POINTS = 6;
+var SHAPES = 50; // size of dna arrays
+var POINTS = 6;
 
-var ACTUAL_SHAPES = 50; // current size
-var ACTUAL_POINTS = 6;
-
-var DNA_BEST = new Array(MAX_SHAPES);
-var DNA_TEST = new Array(MAX_SHAPES);
+var DNA_BEST = new Array(SHAPES);
+var DNA_TEST = new Array(SHAPES);
 
 var CHANGED_SHAPE_INDEX = 0;
 
@@ -59,46 +56,24 @@ var DATA_TEST = 0;
 
 var CHOSEN_FILE_ENTRY = null;
 
-var addPolygon = function() {
-  ACTUAL_SHAPES = Util.clamp(ACTUAL_SHAPES + 1, 1, 1000);
-  if (ACTUAL_SHAPES > MAX_SHAPES) {
-    extend_dna_polygons(DNA_TEST);
-    extend_dna_polygons(DNA_BEST);
-    MAX_SHAPES++;
+var setPolygons = function(polygons) {
+  adjustDnaArray(DNA_TEST, polygons);
+  adjustDnaArray(DNA_BEST, polygons);
+  if (polygons > SHAPES) {
     pass_gene_mutation(DNA_BEST, DNA_TEST, DNA_BEST.length - 1);
   }
-  Util.setElement('polygons', ACTUAL_SHAPES);
-
+  SHAPES = polygons;
   redrawDNA();
   refreshStats();
 };
 
-var removePolygon = function() {
-  ACTUAL_SHAPES = Util.clamp(ACTUAL_SHAPES - 1, 1, 1000);
-  Util.setElement('polygons', ACTUAL_SHAPES);
-
-  redrawDNA();
-  refreshStats();
-};
-
-var addVertex = function() {
-  ACTUAL_POINTS = Util.clamp(ACTUAL_POINTS + 1, 3, 1000);
-  if (ACTUAL_POINTS > MAX_POINTS) {
-    extend_dna_vertices(DNA_TEST);
-    extend_dna_vertices(DNA_BEST);
-    MAX_POINTS++;
+var setVertices = function(vertices) {
+  adjustDnaVertices(DNA_TEST, vertices);
+  adjustDnaVertices(DNA_BEST, vertices);
+  if (vertices > POINTS) {
     copyDNA(DNA_BEST, DNA_TEST);
   }
-  Util.setElement('vertices', ACTUAL_POINTS);
-
-  redrawDNA();
-  refreshStats();
-};
-
-var removeVertex = function() {
-  ACTUAL_POINTS = Util.clamp(ACTUAL_POINTS - 1, 3, 1000);
-  Util.setElement('vertices', ACTUAL_POINTS);
-
+  POINTS = vertices;
   redrawDNA();
   refreshStats();
 };
@@ -183,7 +158,7 @@ function drawShape(ctx, shape, color) {
   ctx.fillStyle = 'rgba('+ color.r + ','+ color.g + ','+ color.b + ','+ color.a + ')';
   ctx.beginPath();
   ctx.moveTo(shape[0].x, shape[0].y);
-  for (var i = 1; i < ACTUAL_POINTS; i++) {
+  for (var i = 1; i < POINTS; i++) {
     ctx.lineTo(shape[i].x, shape[i].y);
   }
   ctx.closePath();
@@ -192,7 +167,7 @@ function drawShape(ctx, shape, color) {
 
 function drawDNA(ctx, dna) {
   ctx.clearRect(0, 0, IWIDTH, IHEIGHT);
-  for (var i = 0; i < ACTUAL_SHAPES; i++) {
+  for (var i = 0; i < SHAPES; i++) {
     drawShape(ctx, dna[i].shape, dna[i].color);
   }
 }
@@ -262,7 +237,7 @@ function draw_dist(ctx, dist) {
 }
 
 function mutate_gauss(dna_out) {
-  CHANGED_SHAPE_INDEX = Util.rand_int(ACTUAL_SHAPES - 1);
+  CHANGED_SHAPE_INDEX = Util.rand_int(SHAPES - 1);
 
   var roulette = Util.rand_float(2.0);
 
@@ -288,7 +263,7 @@ function mutate_gauss(dna_out) {
 
   // mutate shape
   else {
-    var CHANGED_POINT_INDEX = Util.rand_int(ACTUAL_POINTS - 1);
+    var CHANGED_POINT_INDEX = Util.rand_int(POINTS - 1);
 
     // x-coordinate
     if (roulette < 1.5) {
@@ -304,7 +279,7 @@ function mutate_gauss(dna_out) {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function mutate_medium(dna_out) {
-  CHANGED_SHAPE_INDEX = Util.rand_int(ACTUAL_SHAPES - 1);
+  CHANGED_SHAPE_INDEX = Util.rand_int(SHAPES - 1);
 
   var roulette = Util.rand_float(2.0);
 
@@ -330,7 +305,7 @@ function mutate_medium(dna_out) {
 
   // mutate shape
   else {
-    var CHANGED_POINT_INDEX = Util.rand_int(ACTUAL_POINTS - 1);
+    var CHANGED_POINT_INDEX = Util.rand_int(POINTS - 1);
 
     // x-coordinate
     if (roulette < 1.5) {
@@ -345,20 +320,20 @@ function mutate_medium(dna_out) {
 }
 
 function mutate_hard(dna_out) {
-  CHANGED_SHAPE_INDEX = Util.rand_int(ACTUAL_SHAPES - 1);
+  CHANGED_SHAPE_INDEX = Util.rand_int(SHAPES - 1);
 
   dna_out[CHANGED_SHAPE_INDEX].color.r = Util.rand_int(255);
   dna_out[CHANGED_SHAPE_INDEX].color.g = Util.rand_int(255);
   dna_out[CHANGED_SHAPE_INDEX].color.b = Util.rand_int(255);
   dna_out[CHANGED_SHAPE_INDEX].color.a = Util.rand_float(1.0);
-  var CHANGED_POINT_INDEX = Util.rand_int(ACTUAL_POINTS - 1);
+  var CHANGED_POINT_INDEX = Util.rand_int(POINTS - 1);
 
   dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].x = Util.rand_int(IWIDTH);
   dna_out[CHANGED_SHAPE_INDEX].shape[CHANGED_POINT_INDEX].y = Util.rand_int(IHEIGHT);
 }
 
 function mutate_soft(dna_out) {
-  CHANGED_SHAPE_INDEX = Util.rand_int(ACTUAL_SHAPES - 1);
+  CHANGED_SHAPE_INDEX = Util.rand_int(SHAPES - 1);
 
   var roulette = Util.rand_float(2.0);
 
@@ -386,7 +361,7 @@ function mutate_soft(dna_out) {
 
   // mutate shape
   else {
-    var CHANGED_POINT_INDEX = Util.rand_int(ACTUAL_POINTS - 1);
+    var CHANGED_POINT_INDEX = Util.rand_int(POINTS - 1);
 
     // x-coordinate
     if (roulette < 1.5) {
@@ -420,14 +395,14 @@ function pass_gene_mutation(dna_from, dna_to, gene_index) {
   dna_to[gene_index].color.b = dna_from[gene_index].color.b;
   dna_to[gene_index].color.a = dna_from[gene_index].color.a;
 
-  for (var i = 0; i < MAX_POINTS; i++) {
+  for (var i = 0; i < POINTS; i++) {
     dna_to[gene_index].shape[i].x = dna_from[gene_index].shape[i].x;
     dna_to[gene_index].shape[i].y = dna_from[gene_index].shape[i].y;
   }
 }
 
 function copyDNA(dna_from, dna_to) {
-  for (var i = 0; i < MAX_SHAPES; i++)
+  for (var i = 0; i < SHAPES; i++)
     pass_gene_mutation(dna_from, dna_to, i);
 }
 
@@ -466,9 +441,9 @@ function evolve() {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function init_dna(dna) {
-  for (var i = 0; i < MAX_SHAPES; i++) {
-    var points = new Array(MAX_POINTS);
-    for (var j = 0; j < MAX_POINTS; j++) {
+  for (var i = 0; i < SHAPES; i++) {
+    var points = new Array(POINTS);
+    for (var j = 0; j < POINTS; j++) {
       points[j] = {'x': Util.rand_int(IWIDTH), 'y': Util.rand_int(IHEIGHT)};
     }
     var color = {};
@@ -484,24 +459,36 @@ function init_dna(dna) {
   }
 }
 
-function extend_dna_polygons(dna) {
-  var points = new Array(MAX_POINTS);
-  for (var j = 0; j < MAX_POINTS; j++) {
-    points[j] = {'x': Util.rand_int(IWIDTH), 'y': Util.rand_int(IHEIGHT)};
+function adjustDnaArray(dna, polygons) {
+  if (polygons < dna.length) {
+    dna.length = polygons;
+    return;
   }
-  var color = {};
-  if (INIT_TYPE == 'random')
-    color = {'r': Util.rand_int(255), 'g': Util.rand_int(255), 'b': Util.rand_int(255), 'a': 0.001};
-  else
-    color = {'r': INIT_R, 'g': INIT_G, 'b': INIT_B, 'a': INIT_A};
-  var shape = {'color': color, 'shape': points};
-  dna.push(shape);
+  while (dna.length < polygons) {
+    var points = new Array(POINTS);
+    for (var j = 0; j < POINTS; j++) {
+      points[j] = {'x': Util.rand_int(IWIDTH), 'y': Util.rand_int(IHEIGHT)};
+    }
+    var color = {};
+    if (INIT_TYPE == 'random')
+      color = {'r': Util.rand_int(255), 'g': Util.rand_int(255),
+               'b': Util.rand_int(255), 'a': 0.001};
+    else
+      color = {'r': INIT_R, 'g': INIT_G, 'b': INIT_B, 'a': INIT_A};
+    var shape = {'color': color, 'shape': points};
+    dna.push(shape);
+  }
 }
 
-function extend_dna_vertices(dna) {
-  for (var i = 0; i < MAX_SHAPES; i++) {
-    var point = {'x': Util.rand_int(IWIDTH), 'y': Util.rand_int(IHEIGHT)};
-    dna[i].shape.push(point);
+function adjustDnaVertices(dna, vertices) {
+  for (var i = 0; i < SHAPES; i++) {
+    if (dna[i].shape.length > vertices) {
+      dna[i].shape.length = vertices;
+    }
+    while (dna[i].shape.length < vertices) {
+      var point = {'x': Util.rand_int(IWIDTH), 'y': Util.rand_int(IHEIGHT)};
+      dna[i].shape.push(point);
+    }
   }
 }
 
@@ -561,16 +548,16 @@ function serializeDNA(dna) {
   var dna_string = '';
 
   // header
-  dna_string += ACTUAL_POINTS + ' ';
-  dna_string += ACTUAL_SHAPES + ' ';
+  dna_string += POINTS + ' ';
+  dna_string += SHAPES + ' ';
 
   // shapes
-  for (var i = 0; i < ACTUAL_SHAPES; i++) {
+  for (var i = 0; i < SHAPES; i++) {
     dna_string += dna[i].color.r + ' ';
     dna_string += dna[i].color.g + ' ';
     dna_string += dna[i].color.b + ' ';
     dna_string += dna[i].color.a + ' ';
-    for (var j = 0; j < ACTUAL_POINTS; j++) {
+    for (var j = 0; j < POINTS; j++) {
       dna_string += dna[i].shape[j].x + ' ';
       dna_string += dna[i].shape[j].y + ' ';
     }
@@ -591,9 +578,9 @@ function serializeDNAasSVG(dna) {
   dna_string += ('width="' + IWIDTH + '" height="' + IHEIGHT + '">\n');
 
   // shapes
-  for (var i = 0; i < ACTUAL_SHAPES; i++) {
+  for (var i = 0; i < SHAPES; i++) {
     dna_string += '<polygon points=\"';
-    for (var j = 0; j < ACTUAL_POINTS; j++) {
+    for (var j = 0; j < POINTS; j++) {
       dna_string += dna[i].shape[j].x + ' ';
       dna_string += dna[i].shape[j].y + ' ';
     }
@@ -610,22 +597,19 @@ function serializeDNAasSVG(dna) {
 function deserializeDNA(dna, text) {
   var data = text.split(' ');
 
-  MAX_POINTS = parseInt(data[0]);
-  MAX_SHAPES = parseInt(data[1]);
-
-  ACTUAL_SHAPES = MAX_SHAPES;
-  ACTUAL_POINTS = MAX_POINTS;
+  POINTS = parseInt(data[0]);
+  SHAPES = parseInt(data[1]);
 
   init_dna(dna);
 
-  var shape_size = 4 + 2 * MAX_POINTS;
+  var shape_size = 4 + 2 * POINTS;
 
-  for (var i = 0; i < MAX_SHAPES; i++) {
+  for (var i = 0; i < SHAPES; i++) {
     dna[i].color.r = parseInt(data[2 + i * shape_size + 0]);
     dna[i].color.g = parseInt(data[2 + i * shape_size + 1]);
     dna[i].color.b = parseInt(data[2 + i * shape_size + 2]);
     dna[i].color.a = parseFloat(data[2 + i * shape_size + 3]);
-    for (var j = 0; j < MAX_POINTS; j++) {
+    for (var j = 0; j < POINTS; j++) {
       dna[i].shape[j].x = parseInt(data[2 + i * shape_size + 4 + j * 2]);
       dna[i].shape[j].y = parseInt(data[2 + i * shape_size + 4 + j * 2 + 1]);
     }
@@ -641,8 +625,8 @@ var import_dna = function(text) {
   redrawDNA();
   refreshStats();
 
-  Util.setElement('polygons', ACTUAL_SHAPES);
-  Util.setElement('vertices', ACTUAL_POINTS);
+  Util.setElement('polygons', SHAPES);
+  Util.setElement('vertices', POINTS);
 };
 
 var set_image = function(imageFile) {

@@ -86,7 +86,6 @@ a:hover { background:#1e4881; color:white; text-decoration:none }
 
 #geometry { margin:1em 0 0.4em 0 }
 #polygons, #vertices { font-size:2em }
-.pargeo { margin:0 0 0 0.5em; position:relative; top:0.4em }
 #geometry .button { font-weight:bold; width:1em;  }
 
 dt { font-weight:bold; margin-bottom:0.5em }

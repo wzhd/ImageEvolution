@@ -76,7 +76,6 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
   this.setMutation = setMutation;
   this.setDnaRandom = setDnaRandom;
   this.setDnaColor = setDnaColor;
-  this.set_image = set_image;
 
   this.import_dna = function() {
     import_dna(this.exportingText);
@@ -163,7 +162,7 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
     }
     else {
       CHOSEN_FILE_ENTRY.file(function(file) {
-        this.set_image(window.URL.createObjectURL(file));
+        set_image(window.URL.createObjectURL(file));
       });
 
       console.log('Image file loaded');
@@ -186,7 +185,7 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
           {'chosenFile': chrome.fileSystem.retainEntry(readOnlyEntry)});
       } catch (e) {}
       CHOSEN_FILE_ENTRY = readOnlyEntry;
-      loadFileEntry();
+      loadFileEntry(CHOSEN_FILE_ENTRY);
     });
   };
 

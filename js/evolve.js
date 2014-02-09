@@ -54,8 +54,6 @@ var NORM_COEF = IWIDTH * IHEIGHT * 3 * 255; // maximum distance between black
 var DATA_INPUT = 0;
 var DATA_TEST = 0;
 
-var CHOSEN_FILE_ENTRY = null;
-
 var setPolygons = function(polygons) {
   adjustDnaArray(DNA_TEST, polygons);
   adjustDnaArray(DNA_BEST, polygons);

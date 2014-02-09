@@ -1,5 +1,7 @@
 angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
 
+  var chosenImageFile = null;
+
   this.showParameters = false;
   this.uploaderStyle = { opacity: '0.4' };
   this.exporterStyle = { opacity: '0.4' };
@@ -7,7 +9,7 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
     style.opacity = '1.0';
   };
   this.hideControl = function(style) {
-    if (CHOSEN_FILE_ENTRY)
+    if (chosenImageFile)
       style.opacity = '0.0';
     else
       style.opacity = '0.4';
@@ -88,8 +90,8 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
   this.save_dna_as_svg = function() {
     var blob = new Blob([serializeDNAasSVG(DNA_BEST)]);
     var name = 'image.svg';
-    if (CHOSEN_FILE_ENTRY) {
-      name = CHOSEN_FILE_ENTRY.name;
+    if (chosenImageFile) {
+      name = chosenImageFile.name;
       name = name.substr(0, name.lastIndexOf('.'));
       name = name + '.svg';
     }
@@ -102,8 +104,8 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
   this.savePng = function() {
     var blob = Util.dataUriToBlob(CANVAS_TEST.toDataURL());
     var name = 'image.png';
-    if (CHOSEN_FILE_ENTRY) {
-      name = CHOSEN_FILE_ENTRY.name;
+    if (chosenImageFile) {
+      name = chosenImageFile.name;
       name = name.substr(0, name.lastIndexOf('.'));
       name = name + '.png';
     }
@@ -156,15 +158,15 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
     setTimeout(reentrant, 100);
   }
 
-  function loadFileEntry() {
-    if (!CHOSEN_FILE_ENTRY) {
+  function loadFileEntry(entry) {
+    if (!entry) {
       console.log('Sorry, could not load file');
     }
     else {
-      CHOSEN_FILE_ENTRY.file(function(file) {
+      entry.file(function(file) {
         set_image(window.URL.createObjectURL(file));
       });
-
+      chosenImageFile = entry;
       console.log('Image file loaded');
     }
   };
@@ -184,8 +186,7 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
         chrome.storage.local.set(
           {'chosenFile': chrome.fileSystem.retainEntry(readOnlyEntry)});
       } catch (e) {}
-      CHOSEN_FILE_ENTRY = readOnlyEntry;
-      loadFileEntry(CHOSEN_FILE_ENTRY);
+      loadFileEntry(readOnlyEntry);
     });
   };
 
@@ -207,18 +208,19 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
     e.stopPropagation();
 
     var data = e.dataTransfer;
+    var img;
 
     for (var i = 0; i < data.items.length; i++) {
       var item = data.items[i];
       if (item.kind == 'file' &&
           item.type.match('image/*') &&
           item.webkitGetAsEntry()) {
-        CHOSEN_FILE_ENTRY = item.webkitGetAsEntry();
+        img = item.webkitGetAsEntry();
         break;
       }
     }
 
-    loadFileEntry(CHOSEN_FILE_ENTRY);
+    loadFileEntry(img);
   };
 
   document.body.addEventListener("dragover", dragOver, false);

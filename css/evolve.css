@@ -101,13 +101,6 @@ dd { margin:0 0 2em 0 }
   from { background-color: white;} to {background-color: rgb(255, 203, 203);}
 }
 
-.dragging {
-  -webkit-animation: switch-green 0.5s ease-in-out 0 infinite alternate;
-}
-
-.invalid-dragging {
-  -webkit-animation: switch-red 0.5s ease-in-out 0 infinite alternate;
-}
 canvas {
   -webkit-flex: 1;
   border: 1px #aaa solid;

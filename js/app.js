@@ -201,11 +201,6 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
       else {
         console.log('invalid image');
       }
-    this.dropClass = valid ? "dragging" : "invalid-dragging";
-  };
-
-  var dragLeave = function(e) {
-    this.dropClass = '';
   };
 
   var drop = function(e) {
@@ -225,12 +220,9 @@ angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
     }
 
     loadFileEntry(CHOSEN_FILE_ENTRY);
-
-    this.dropClass = '';
   };
 
   document.body.addEventListener("dragover", dragOver, false);
-  document.body.addEventListener("dragleave", dragLeave, false);
   document.body.addEventListener("drop", drop, false);
 
   this.close = function() {

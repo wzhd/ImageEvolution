@@ -31,10 +31,9 @@ a:hover { background:#1e4881; color:white; text-decoration:none }
     left: 32px;
     font-size: 1.3em;
 }
-#titlebar-close-button {
+.titlebar-button {
     position: absolute;
     top: 0px;
-    right: 0px;
     font-size: 1.3em;
     height: 1.3em;
     width: 1.3em;
@@ -44,6 +43,15 @@ a:hover { background:#1e4881; color:white; text-decoration:none }
     -webkit-transition-duration: 0.3s;
     -webkit-transition-timing-function: ease-in-out;
     -webkit-transition-delay: initial;
+}
+.titlebar-button:hover {
+    background-color: #0088CC;
+}
+#titlebar-toggle-button {
+    right: 1.3em;
+}
+#titlebar-close-button {
+    right: 0em;
 }
 #titlebar-close-button:hover {
     background-color: #a00000;

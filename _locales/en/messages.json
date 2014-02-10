@@ -30,7 +30,7 @@
     "message": "Elapsed Time"
   },
   "mutationsPerSecond": {
-    "message": "Mutations per second"
+    "message": "Mutations/s"
   },
   "exportDna": {
     "message": "Export DNA"

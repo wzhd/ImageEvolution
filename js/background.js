@@ -12,8 +12,8 @@ var runApp = function() {
     {
       id: 'mainwindow',
       'bounds': {
-        'width': 822,
-        'height': 477
+        'width': 489,
+        'height': 305
       },
       frame: 'none'
     }

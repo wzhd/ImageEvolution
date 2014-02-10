@@ -1,5 +1,5 @@
 aaa { outline:dotted 1px red }
-body { font-family:arial, sans-serif; padding:1em }
+body { font-family:arial, sans-serif; padding:1em; background-color: #F5F5F5 }
 h2 { margin-top:1.75em }
 p { font-size: 0.5em }
 canvas { border:solid 1px #000 }
@@ -56,7 +56,7 @@ a:hover { background:#1e4881; color:white; text-decoration:none }
 #titlebar-close-button:hover {
     background-color: #a00000;
 }
-#main { float: left }
+#main { float: left; margin: 5px; }
 .floating {
     position: absolute;
     top: 0;

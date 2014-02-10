@@ -1,0 +1,17 @@
+.show-hide.ng-hide-add, .show-hide.ng-hide-remove {
+  -webkit-transition:all linear 0.5s;
+  -moz-transition:all linear 0.5s;
+  -o-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+  display:block!important;
+}
+
+.show-hide.ng-hide-add.ng-hide-add-active,
+.show-hide.ng-hide-remove {
+  opacity:0;
+}
+
+.show-hide.ng-hide-add,
+.show-hide.ng-hide-remove.ng-hide-remove-active {
+  opacity:1;
+}

@@ -1,4 +1,4 @@
-angular.module('EvoApp', []).controller('EvoAppCtrl', function() {
+angular.module('EvoApp', ['ngAnimate']).controller('EvoAppCtrl', function() {
 
   var chosenImageFile = null;
 

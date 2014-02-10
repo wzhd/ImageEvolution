@@ -89,7 +89,15 @@ a:hover { background:#1e4881; color:white; text-decoration:none }
 #clipboard { width: 20em; margin:1em 0 0 0; }
 
 #mutationtype, #resetdna { margin:0 0 0.4em 0 }
-#parameters { float: left }
+#parameters {
+    position: absolute;
+    right: 0em;
+    top: 1.6em;
+    bottom: 0em;
+    width: 19em;
+    background-color: white;
+    box-shadow: 0 0 40px rgba(0,0,0,0.2);
+}
 .parname { margin:0 0 0.2em 0 }
 
 #geometry { margin:1em 0 0.4em 0 }

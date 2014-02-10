@@ -500,9 +500,11 @@ function init_canvas() {
 
   //shrink image if it's too large
   var ratio = 1;
-  var imagePerimeter = (IMAGE.width + IMAGE.height) * 2;
-  if (imagePerimeter > 800)
-    ratio = 800 / imagePerimeter;
+  var longerLength = IMAGE.width;
+  if (longerLength < IMAGE.height)
+    longerLength = IMAGE.height;
+  if (longerLength > 200)
+    ratio = 200 / longerLength;
   IWIDTH = Math.round(ratio * IMAGE.width);
   IHEIGHT = Math.round(ratio * IMAGE.height);
   var canvasCopy = document.createElement('canvas');

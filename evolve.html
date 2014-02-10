@@ -60,7 +60,7 @@
             <p>{{evo.dropText}}</p>
           </div>
         </div>
-        <div class="image" ng-mouseover="evo.showControl(evo.exporterStyle)" ng-mouseout="evo.hideControl(evo.exporterStyle)">
+        <div class="image" id="image-testing" ng-mouseover="evo.showControl(evo.exporterStyle)" ng-mouseout="evo.hideControl(evo.exporterStyle)">
           <canvas id="canvas_test"></canvas>
           <div class="floating" ng-style="evo.exporterStyle">
             <button  ng-click="evo.save_dna_as_svg()">{{evo.exportSvgText}}</button>
@@ -70,18 +70,15 @@
       </div>
 
       <div id="fitwrap">
-        <div id="stats">
-          <span id="fitness">?</span>{{evo.fitnessText}}
-          <span id="step_benefit">0</span>{{evo.improvementsText}}<br/>
-          <span id="step_total">0</span>{{evo.mutationsText}}
-          <span id="time">0</span>{{evo.elapsedTimeText}}
-          <span id="mutsec">?</span>{{evo.mutationsPerSecondText}}
-        </div>
+        <span id="fitness">?</span>{{evo.fitnessText}}
+        <span id="step_benefit">0</span>{{evo.improvementsText}}
         <div id="start" class="button" ng-click="evo.start()">{{evo.startText}}</div>
         <div id="stop" class="button" ng-click="evo.stop()">{{evo.stopText}}</div>
+        <br/>
+        <span id="step_total">0</span>{{evo.mutationsText}}
+        <span id="time">0</span>{{evo.elapsedTimeText}}
+        <span id="mutsec">?</span>{{evo.mutationsPerSecondText}}
       </div>
-
-    </div>
 
     <aside ng-show="evo.showParameters" id="parameters" class="show-hide">
 
